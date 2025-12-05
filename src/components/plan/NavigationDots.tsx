@@ -22,7 +22,7 @@ export default function NavigationDots({ modules, activeModule, onModuleChange }
           <div
             className={`transition-all duration-300 ${
               index === activeIndex
-                ? 'w-8 h-2 bg-red-400 rounded-full'
+                ? 'w-8 h-2 bg-primary-400 rounded-full'
                 : 'w-2 h-2 bg-gray-300 rounded-full hover:bg-gray-400'
             }`}
           />

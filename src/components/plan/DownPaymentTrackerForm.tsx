@@ -383,7 +383,7 @@ function GoalSettingSection({ goal, onChange, formatCurrency }: GoalSettingSecti
             type="number"
             value={goal.targetPrice || ''}
             onChange={(e) => onChange('targetPrice', parseFloat(e.target.value) || 0)}
-            className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-colors"
+            className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition-colors"
             placeholder="$500,000"
           />
         </div>
@@ -397,7 +397,7 @@ function GoalSettingSection({ goal, onChange, formatCurrency }: GoalSettingSecti
             type="number"
             value={goal.downPaymentPercentage || ''}
             onChange={(e) => onChange('downPaymentPercentage', parseFloat(e.target.value) || 0)}
-            className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-colors"
+            className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition-colors"
             placeholder="20"
             min="5"
             max="100"
@@ -410,7 +410,7 @@ function GoalSettingSection({ goal, onChange, formatCurrency }: GoalSettingSecti
             type="date"
             value={goal.targetDate}
             onChange={(e) => onChange('targetDate', e.target.value)}
-            className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-colors"
+            className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition-colors"
           />
         </div>
 
@@ -425,7 +425,7 @@ function GoalSettingSection({ goal, onChange, formatCurrency }: GoalSettingSecti
       </div>
 
       {goal.targetPrice > 0 && (
-        <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div className="mt-6 p-4 bg-primary-50 border border-primary-200 rounded-lg">
           <p className="text-sm text-gray-700">
             <span className="font-semibold">Your Target:</span>{' '}
             {formatCurrency(goal.targetDownPayment)} ({goal.downPaymentPercentage}% of{' '}
@@ -455,21 +455,21 @@ function ProgressSection({ calculations, formatCurrency }: ProgressSectionProps)
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-medium text-gray-700">Your Progress</span>
-          <span className="text-2xl font-bold text-red-400">
+          <span className="text-2xl font-bold text-primary-400">
             {calculations.progressPercentage.toFixed(1)}%
           </span>
         </div>
         <div className="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
           <div
-            className="h-full bg-red-400 transition-all duration-500 ease-out"
+            className="h-full bg-primary-400 transition-all duration-500 ease-out"
             style={{ width: `${Math.min(100, calculations.progressPercentage)}%` }}
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-red-50 rounded-lg p-4">
-          <p className="text-xs text-red-800 font-medium mb-1">Total Saved</p>
+        <div className="bg-primary-50 rounded-lg p-4">
+          <p className="text-xs text-primary-800 font-medium mb-1">Total Saved</p>
           <p className="text-2xl font-bold text-gray-900">
             {formatCurrency(calculations.totalSaved)}
           </p>
@@ -550,7 +550,7 @@ function SavingsAccountsSection({
         <h2 className="text-lg font-semibold text-gray-900">Savings Accounts</h2>
         <button
           onClick={onAddAccount}
-          className="flex items-center gap-2 px-4 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-primary-400 text-white rounded-md hover:bg-primary-500 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Add Account
@@ -578,7 +578,7 @@ function SavingsAccountsSection({
                     type="text"
                     value={account.name}
                     onChange={(e) => onAccountChange(account.id, 'name', e.target.value)}
-                    className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:border-red-400 focus:ring-1 focus:ring-red-100"
+                    className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:border-primary-400 focus:ring-1 focus:ring-primary-100"
                   />
                 </td>
                 <td className="py-3 px-2">
@@ -586,7 +586,7 @@ function SavingsAccountsSection({
                     <select
                       value={account.type}
                       onChange={(e) => onAccountChange(account.id, 'type', e.target.value)}
-                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:border-red-400 focus:ring-1 focus:ring-red-100"
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:border-primary-400 focus:ring-1 focus:ring-primary-100"
                     >
                       {Object.entries(accountTypeLabels).map(([value, label]) => (
                         <option key={value} value={value}>
@@ -604,7 +604,7 @@ function SavingsAccountsSection({
                     onChange={(e) =>
                       onAccountChange(account.id, 'currentBalance', parseFloat(e.target.value) || 0)
                     }
-                    className="w-full px-2 py-1 border border-gray-300 rounded text-sm text-right focus:border-red-400 focus:ring-1 focus:ring-red-100"
+                    className="w-full px-2 py-1 border border-gray-300 rounded text-sm text-right focus:border-primary-400 focus:ring-1 focus:ring-primary-100"
                     placeholder="0"
                   />
                 </td>
@@ -619,7 +619,7 @@ function SavingsAccountsSection({
                         parseFloat(e.target.value) || 0
                       )
                     }
-                    className="w-full px-2 py-1 border border-gray-300 rounded text-sm text-right focus:border-red-400 focus:ring-1 focus:ring-red-100"
+                    className="w-full px-2 py-1 border border-gray-300 rounded text-sm text-right focus:border-primary-400 focus:ring-1 focus:ring-primary-100"
                     placeholder="0"
                   />
                 </td>

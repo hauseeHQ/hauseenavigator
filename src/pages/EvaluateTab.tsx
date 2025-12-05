@@ -533,7 +533,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
                 type="number"
                 value={formData.yearBuilt || ''}
                 onChange={(e) => handleChange('yearBuilt', parseInt(e.target.value) || undefined)}
-                className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-colors"
+                className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition-colors"
                 placeholder="2020"
               />
             </div>
@@ -544,7 +544,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
                 type="number"
                 value={formData.propertyTaxes || ''}
                 onChange={(e) => handleChange('propertyTaxes', parseFloat(e.target.value) || undefined)}
-                className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-colors"
+                className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition-colors"
                 placeholder="5000"
               />
             </div>
@@ -557,7 +557,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
                 type="number"
                 value={formData.squareFootage || ''}
                 onChange={(e) => handleChange('squareFootage', parseInt(e.target.value) || undefined)}
-                className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-colors"
+                className="w-full h-12 px-4 border border-gray-300 rounded-md focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition-colors"
                 placeholder="1500"
               />
             </div>
@@ -647,7 +647,7 @@ function CompareView({ homes, onRemoveFromCompare, onBackToBrowse, onClearAll }:
         </div>
         <button
           onClick={onClearAll}
-          className="text-sm text-red-400 hover:text-red-500 transition-colors"
+          className="text-sm text-primary-400 hover:text-primary-500 transition-colors"
         >
           Clear all selections
         </button>
@@ -707,7 +707,7 @@ function CompareView({ homes, onRemoveFromCompare, onBackToBrowse, onClearAll }:
               <ComparisonRow label="Price">
                 {homes.map((home) => (
                   <td key={home.id} className="p-4 text-center">
-                    <span className="text-xl font-bold text-red-400">
+                    <span className="text-xl font-bold text-primary-400">
                       {formatCurrency(home.price)}
                     </span>
                   </td>
