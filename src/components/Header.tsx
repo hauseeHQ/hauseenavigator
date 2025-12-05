@@ -1,0 +1,83 @@
+import { useState, useRef, useEffect } from 'react';
+import { User, Settings, LogOut, HelpCircle } from 'lucide-react';
+
+interface HeaderProps {
+  onOpenSettings: () => void;
+}
+
+export default function Header({ onOpenSettings }: HeaderProps) {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+
+    if (showDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showDropdown]);
+
+  const handleMenuClick = (action: string) => {
+    setShowDropdown(false);
+    if (action === 'settings') {
+      onOpenSettings();
+    }
+  };
+
+  return (
+    <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+      <div>
+        <h1 className="text-xl font-semibold text-gray-900">Hausee Navigator</h1>
+        <p className="text-sm text-gray-500">Welcome back, Guest</p>
+      </div>
+      <div className="flex items-center gap-4">
+        <div className="relative" ref={dropdownRef}>
+          <button
+            onClick={() => setShowDropdown(!showDropdown)}
+            className="flex items-center gap-2 hover:bg-gray-50 rounded-lg transition-colors p-1"
+            aria-label="User menu"
+          >
+            <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+              <User className="w-5 h-5 text-primary-400" />
+            </div>
+          </button>
+
+          {showDropdown && (
+            <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+              <button
+                onClick={() => handleMenuClick('settings')}
+                className="w-full flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <Settings className="w-5 h-5 text-gray-500" />
+                <span className="font-medium">Profile & Settings</span>
+              </button>
+              <button
+                onClick={() => handleMenuClick('help')}
+                className="w-full flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <HelpCircle className="w-5 h-5 text-gray-500" />
+                <span className="font-medium">Help & Support</span>
+              </button>
+              <div className="border-t border-gray-200 my-2"></div>
+              <button
+                onClick={() => handleMenuClick('signout')}
+                className="w-full flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors"
+              >
+                <LogOut className="w-5 h-5" />
+                <span className="font-medium">Sign Out</span>
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+}

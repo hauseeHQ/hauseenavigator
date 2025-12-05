@@ -1,0 +1,709 @@
+import { createClient } from '@supabase/supabase-js';
+import { DreamHome, SelfAssessment, CategoryScore, AssessmentStatus, MortgageChecklist, ChecklistProgress, ChecklistItemState, MovingTodoList, MovingTodoItemState, BudgetPlannerData, DownPaymentTrackerData, Home, AddHomeFormData } from '../types';
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables');
+}
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export interface DreamHomeDbRecord {
+  id: string;
+  user_id: string;
+  construction_status: 'new' | 'ready' | null;
+  price_min: number;
+  price_max: number;
+  preferred_cities: string[];
+  bedrooms: string | null;
+  bathrooms: string | null;
+  max_condo_fees: number | null;
+  backyard: 'small' | 'large' | 'indifferent' | null;
+  timeline: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function saveDreamHome(
+  userId: string,
+  data: DreamHome
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const record = {
+      user_id: userId,
+      construction_status: data.constructionStatus,
+      price_min: data.priceRange.min,
+      price_max: data.priceRange.max,
+      preferred_cities: data.preferredCities,
+      bedrooms: data.bedrooms,
+      bathrooms: data.bathrooms,
+      max_condo_fees: data.maxCondoFees,
+      backyard: data.backyard,
+      timeline: data.timeline,
+      notes: data.notes || '',
+      updated_at: new Date().toISOString(),
+    };
+
+    const { error } = await supabase
+      .from('dream_home_preferences')
+      .upsert(record, {
+        onConflict: 'user_id',
+      });
+
+    if (error) {
+      console.error('Error saving dream home:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Error saving dream home:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function loadDreamHome(
+  userId: string
+): Promise<{ data: DreamHome | null; error?: string }> {
+  try {
+    const { data, error } = await supabase
+      .from('dream_home_preferences')
+      .select('*')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error loading dream home:', error);
+      return { data: null, error: error.message };
+    }
+
+    if (!data) {
+      return { data: null };
+    }
+
+    const dbRecord = data as DreamHomeDbRecord;
+
+    const dreamHome: DreamHome = {
+      constructionStatus: dbRecord.construction_status,
+      priceRange: {
+        min: dbRecord.price_min,
+        max: dbRecord.price_max,
+      },
+      preferredCities: dbRecord.preferred_cities || [],
+      bedrooms: dbRecord.bedrooms,
+      bathrooms: dbRecord.bathrooms,
+      maxCondoFees: dbRecord.max_condo_fees,
+      backyard: dbRecord.backyard,
+      timeline: dbRecord.timeline,
+      notes: dbRecord.notes || '',
+      updatedAt: dbRecord.updated_at,
+    };
+
+    return { data: dreamHome };
+  } catch (err) {
+    console.error('Error loading dream home:', err);
+    return {
+      data: null,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export interface AssessmentDbRecord {
+  id: string;
+  user_id: string;
+  answers: number[];
+  completed_at: string | null;
+  score: number | null;
+  status: AssessmentStatus;
+  category_scores: CategoryScore[];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function saveAssessment(
+  userId: string,
+  data: SelfAssessment
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const record = {
+      user_id: userId,
+      answers: data.answers,
+      completed_at: data.completedAt,
+      score: data.score,
+      status: data.status,
+      category_scores: data.categoryScores,
+      updated_at: new Date().toISOString(),
+    };
+
+    const { error } = await supabase
+      .from('self_assessment_responses')
+      .upsert(record, {
+        onConflict: 'user_id',
+      });
+
+    if (error) {
+      console.error('Error saving assessment:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Error saving assessment:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function loadAssessment(
+  userId: string
+): Promise<{ data: SelfAssessment | null; error?: string }> {
+  try {
+    const { data, error } = await supabase
+      .from('self_assessment_responses')
+      .select('*')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error loading assessment:', error);
+      return { data: null, error: error.message };
+    }
+
+    if (!data) {
+      return { data: null };
+    }
+
+    const dbRecord = data as AssessmentDbRecord;
+
+    const assessment: SelfAssessment = {
+      answers: dbRecord.answers || [],
+      completedAt: dbRecord.completed_at,
+      score: dbRecord.score,
+      status: dbRecord.status,
+      categoryScores: dbRecord.category_scores || [],
+      updatedAt: dbRecord.updated_at,
+    };
+
+    return { data: assessment };
+  } catch (err) {
+    console.error('Error loading assessment:', err);
+    return {
+      data: null,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export interface ChecklistDbRecord {
+  id: string;
+  user_id: string;
+  items: Record<string, ChecklistItemState>;
+  progress: ChecklistProgress;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function saveMortgageChecklist(
+  userId: string,
+  data: MortgageChecklist
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const record = {
+      user_id: userId,
+      items: data.items,
+      progress: data.progress,
+      updated_at: new Date().toISOString(),
+    };
+
+    const { error } = await supabase
+      .from('mortgage_checklist_items')
+      .upsert(record, {
+        onConflict: 'user_id',
+      });
+
+    if (error) {
+      console.error('Error saving checklist:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Error saving checklist:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function loadMortgageChecklist(
+  userId: string
+): Promise<{ data: MortgageChecklist | null; error?: string }> {
+  try {
+    const { data, error } = await supabase
+      .from('mortgage_checklist_items')
+      .select('*')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error loading checklist:', error);
+      return { data: null, error: error.message };
+    }
+
+    if (!data) {
+      return { data: null };
+    }
+
+    const dbRecord = data as ChecklistDbRecord;
+
+    const checklist: MortgageChecklist = {
+      items: dbRecord.items || {},
+      progress: dbRecord.progress || { completed: 0, total: 0, percentage: 0 },
+      updatedAt: dbRecord.updated_at,
+    };
+
+    return { data: checklist };
+  } catch (err) {
+    console.error('Error loading checklist:', err);
+    return {
+      data: null,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export interface MovingTodoDbRecord {
+  id: string;
+  user_id: string;
+  items: Record<string, MovingTodoItemState>;
+  progress: ChecklistProgress;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function saveMovingTodoList(
+  userId: string,
+  data: MovingTodoList
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const record = {
+      user_id: userId,
+      items: data.items,
+      progress: data.progress,
+      updated_at: new Date().toISOString(),
+    };
+
+    const { error } = await supabase
+      .from('moving_todo_items')
+      .upsert(record, {
+        onConflict: 'user_id',
+      });
+
+    if (error) {
+      console.error('Error saving moving list:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Error saving moving list:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function loadMovingTodoList(
+  userId: string
+): Promise<{ data: MovingTodoList | null; error?: string }> {
+  try {
+    const { data, error } = await supabase
+      .from('moving_todo_items')
+      .select('*')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error loading moving list:', error);
+      return { data: null, error: error.message };
+    }
+
+    if (!data) {
+      return { data: null };
+    }
+
+    const dbRecord = data as MovingTodoDbRecord;
+
+    const movingList: MovingTodoList = {
+      items: dbRecord.items || {},
+      progress: dbRecord.progress || { completed: 0, total: 19, percentage: 0 },
+      updatedAt: dbRecord.updated_at,
+    };
+
+    return { data: movingList };
+  } catch (err) {
+    console.error('Error loading moving list:', err);
+    return {
+      data: null,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export interface BudgetPlannerDbRecord {
+  id: string;
+  user_id: string;
+  current_budget: Record<string, unknown>;
+  homeowner_budget: Record<string, unknown>;
+  calculations: BudgetPlannerData['calculations'];
+  created_at: string;
+  updated_at: string;
+}
+
+export async function saveBudgetPlanner(
+  userId: string,
+  data: BudgetPlannerData
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const record = {
+      user_id: userId,
+      current_budget: data.budget,
+      homeowner_budget: {},
+      calculations: data.calculations,
+      updated_at: new Date().toISOString(),
+    };
+
+    const { error } = await supabase
+      .from('budget_planner')
+      .upsert(record, {
+        onConflict: 'user_id',
+      });
+
+    if (error) {
+      console.error('Error saving budget:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Error saving budget:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function loadBudgetPlanner(
+  userId: string
+): Promise<{ data: BudgetPlannerData | null; error?: string }> {
+  try {
+    const { data, error } = await supabase
+      .from('budget_planner')
+      .select('*')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error loading budget:', error);
+      return { data: null, error: error.message };
+    }
+
+    if (!data) {
+      return { data: null };
+    }
+
+    const dbRecord = data as BudgetPlannerDbRecord;
+
+    const budget: BudgetPlannerData = {
+      budget: dbRecord.current_budget as BudgetPlannerData['budget'],
+      calculations: dbRecord.calculations,
+      updatedAt: dbRecord.updated_at,
+    };
+
+    return { data: budget };
+  } catch (err) {
+    console.error('Error loading budget:', err);
+    return {
+      data: null,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export interface DownPaymentTrackerDbRecord {
+  id: string;
+  user_id: string;
+  goal: Record<string, unknown>;
+  accounts: Array<Record<string, unknown>>;
+  contributions: Array<Record<string, unknown>>;
+  calculations: Record<string, unknown>;
+  milestones: Record<string, boolean>;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function saveDownPaymentTracker(
+  userId: string,
+  data: DownPaymentTrackerData
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const record = {
+      user_id: userId,
+      goal: data.goal,
+      accounts: data.accounts,
+      contributions: data.contributions,
+      calculations: data.calculations,
+      milestones: data.milestones,
+      updated_at: new Date().toISOString(),
+    };
+
+    const { error } = await supabase
+      .from('down_payment_tracker')
+      .upsert(record, {
+        onConflict: 'user_id',
+      });
+
+    if (error) {
+      console.error('Error saving down payment tracker:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Error saving down payment tracker:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function loadDownPaymentTracker(
+  userId: string
+): Promise<{ data: DownPaymentTrackerData | null; error?: string }> {
+  try {
+    const { data, error } = await supabase
+      .from('down_payment_tracker')
+      .select('*')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error loading down payment tracker:', error);
+      return { data: null, error: error.message };
+    }
+
+    if (!data) {
+      return { data: null };
+    }
+
+    const dbRecord = data as DownPaymentTrackerDbRecord;
+
+    const tracker: DownPaymentTrackerData = {
+      goal: dbRecord.goal as DownPaymentTrackerData['goal'],
+      accounts: dbRecord.accounts as DownPaymentTrackerData['accounts'],
+      contributions: dbRecord.contributions as DownPaymentTrackerData['contributions'],
+      calculations: dbRecord.calculations as DownPaymentTrackerData['calculations'],
+      milestones: dbRecord.milestones as DownPaymentTrackerData['milestones'],
+      updatedAt: dbRecord.updated_at,
+    };
+
+    return { data: tracker };
+  } catch (err) {
+    console.error('Error loading down payment tracker:', err);
+    return {
+      data: null,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function loadHomes(userId: string): Promise<{ data: Home[] | null; error?: string }> {
+  try {
+    const { data, error } = await supabase
+      .from('homes')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error loading homes:', error);
+      return { data: null, error: error.message };
+    }
+
+    const homes: Home[] = (data || []).map((record: Record<string, unknown>) => ({
+      id: record.id as string,
+      userId: record.user_id as string,
+      workspaceId: record.workspace_id as string,
+      address: record.address as string,
+      neighborhood: record.neighborhood as string,
+      price: Number(record.price),
+      bedrooms: Number(record.bedrooms),
+      bathrooms: Number(record.bathrooms),
+      yearBuilt: record.year_built ? Number(record.year_built) : undefined,
+      propertyTaxes: record.property_taxes ? Number(record.property_taxes) : undefined,
+      squareFootage: record.square_footage ? Number(record.square_footage) : undefined,
+      favorite: record.favorite as boolean,
+      compareSelected: record.compare_selected as boolean,
+      evaluationStatus: record.evaluation_status as Home['evaluationStatus'],
+      offerIntent: record.offer_intent as Home['offerIntent'],
+      overallRating: Number(record.overall_rating),
+      primaryPhoto: record.primary_photo as string | undefined,
+      createdAt: record.created_at as string,
+      updatedAt: record.updated_at as string,
+    }));
+
+    return { data: homes };
+  } catch (err) {
+    console.error('Error loading homes:', err);
+    return {
+      data: null,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function addHome(
+  userId: string,
+  formData: AddHomeFormData
+): Promise<{ success: boolean; error?: string; home?: Home }> {
+  try {
+    const record = {
+      user_id: userId,
+      workspace_id: userId,
+      address: formData.address,
+      neighborhood: formData.neighborhood,
+      price: formData.price,
+      bedrooms: formData.bedrooms,
+      bathrooms: formData.bathrooms,
+      year_built: formData.yearBuilt,
+      property_taxes: formData.propertyTaxes,
+      square_footage: formData.squareFootage,
+      favorite: false,
+      compare_selected: false,
+      evaluation_status: 'not_started' as const,
+      overall_rating: 0,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+    const { data, error } = await supabase
+      .from('homes')
+      .insert(record)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error adding home:', error);
+      return { success: false, error: error.message };
+    }
+
+    const home: Home = {
+      id: data.id,
+      userId: data.user_id,
+      workspaceId: data.workspace_id,
+      address: data.address,
+      neighborhood: data.neighborhood,
+      price: Number(data.price),
+      bedrooms: Number(data.bedrooms),
+      bathrooms: Number(data.bathrooms),
+      yearBuilt: data.year_built ? Number(data.year_built) : undefined,
+      propertyTaxes: data.property_taxes ? Number(data.property_taxes) : undefined,
+      squareFootage: data.square_footage ? Number(data.square_footage) : undefined,
+      favorite: data.favorite,
+      compareSelected: data.compare_selected,
+      evaluationStatus: data.evaluation_status,
+      offerIntent: data.offer_intent,
+      overallRating: Number(data.overall_rating),
+      primaryPhoto: data.primary_photo,
+      createdAt: data.created_at,
+      updatedAt: data.updated_at,
+    };
+
+    return { success: true, home };
+  } catch (err) {
+    console.error('Error adding home:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function updateHome(
+  homeId: string,
+  updates: Partial<Home>
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const record: Record<string, unknown> = {
+      updated_at: new Date().toISOString(),
+    };
+
+    if (updates.address !== undefined) record.address = updates.address;
+    if (updates.neighborhood !== undefined) record.neighborhood = updates.neighborhood;
+    if (updates.price !== undefined) record.price = updates.price;
+    if (updates.bedrooms !== undefined) record.bedrooms = updates.bedrooms;
+    if (updates.bathrooms !== undefined) record.bathrooms = updates.bathrooms;
+    if (updates.yearBuilt !== undefined) record.year_built = updates.yearBuilt;
+    if (updates.propertyTaxes !== undefined) record.property_taxes = updates.propertyTaxes;
+    if (updates.squareFootage !== undefined) record.square_footage = updates.squareFootage;
+    if (updates.favorite !== undefined) record.favorite = updates.favorite;
+    if (updates.compareSelected !== undefined) record.compare_selected = updates.compareSelected;
+    if (updates.evaluationStatus !== undefined) record.evaluation_status = updates.evaluationStatus;
+    if (updates.offerIntent !== undefined) record.offer_intent = updates.offerIntent;
+    if (updates.overallRating !== undefined) record.overall_rating = updates.overallRating;
+    if (updates.primaryPhoto !== undefined) record.primary_photo = updates.primaryPhoto;
+
+    const { error } = await supabase
+      .from('homes')
+      .update(record)
+      .eq('id', homeId);
+
+    if (error) {
+      console.error('Error updating home:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Error updating home:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function deleteHome(homeId: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { error } = await supabase
+      .from('homes')
+      .delete()
+      .eq('id', homeId);
+
+    if (error) {
+      console.error('Error deleting home:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Error deleting home:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
