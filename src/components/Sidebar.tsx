@@ -25,18 +25,7 @@ export default function Sidebar({ isCollapsed, activeTab, onTabChange, onToggleS
         isCollapsed ? 'w-16' : 'w-60'
       }`}
     >
-      <div className={`flex items-center ${isCollapsed ? 'justify-center pt-6 pb-4' : 'justify-between pt-6 pb-4 px-4'}`}>
-        <button
-          onClick={() => onTabChange('plan')}
-          className="hover:opacity-80 transition-opacity"
-          aria-label="Go to dashboard"
-        >
-          <img
-            src="/hausee-logo.png"
-            alt="Hausee Navigator"
-            className={`${isCollapsed ? 'w-8 h-8' : 'w-12 h-12'} object-contain`}
-          />
-        </button>
+      <div className={`flex items-center ${isCollapsed ? 'justify-center pt-6 pb-4' : 'justify-end pt-6 pb-4 px-4'}`}>
         {!isCollapsed && (
           <button
             onClick={onToggleSidebar}
