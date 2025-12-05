@@ -20,11 +20,11 @@ function App() {
         <WorkspaceProvider>
           <ToastProvider>
             <Routes>
-              <Route path="/" element={<Navigate to="/plan" replace />} />
+              <Route path="/" element={<Navigate to="/signin" replace />} />
 
-              <Route path="/signin" element={<Navigate to="/plan" replace />} />
-              <Route path="/signup" element={<Navigate to="/plan" replace />} />
-              <Route path="/verify-email" element={<Navigate to="/plan" replace />} />
+              <Route path="/signin" element={<SignInPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/verify-email" element={<VerifyEmailPage />} />
 
               <Route
                 path="/workspace/setup"

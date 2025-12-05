@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useUser } from '@clerk/clerk-react';
 import { Workspace } from '../types';
 import { getUserWorkspaces, createWorkspace } from '../lib/workspaceApi';
 
@@ -14,19 +15,23 @@ interface WorkspaceContextType {
 
 const WorkspaceContext = createContext<WorkspaceContextType | undefined>(undefined);
 
-const MOCK_USER_ID = 'test-user-123';
-
 export function WorkspaceProvider({ children }: { children: ReactNode }) {
+  const { user, isLoaded: userLoaded } = useUser();
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [currentWorkspace, setCurrentWorkspace] = useState<Workspace | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const loadWorkspaces = async () => {
+    if (!user?.id) {
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
-    const { data, error: loadError } = await getUserWorkspaces(MOCK_USER_ID);
+    const { data, error: loadError } = await getUserWorkspaces(user.id);
 
     if (loadError) {
       setError(loadError);
@@ -52,8 +57,10 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    loadWorkspaces();
-  }, []);
+    if (userLoaded) {
+      loadWorkspaces();
+    }
+  }, [userLoaded, user?.id]);
 
   const switchWorkspace = (workspaceId: string) => {
     const workspace = workspaces.find(w => w.id === workspaceId);
@@ -68,7 +75,11 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   };
 
   const createNewWorkspace = async (name: string) => {
-    const result = await createWorkspace(MOCK_USER_ID, name);
+    if (!user?.id) {
+      return { success: false, error: 'User not authenticated' };
+    }
+
+    const result = await createWorkspace(user.id, name);
 
     if (result.success && result.workspace) {
       await refreshWorkspaces();
