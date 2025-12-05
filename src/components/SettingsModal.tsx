@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useUser } from '@clerk/clerk-react';
 import {
   User,
   Users,
@@ -93,31 +92,14 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 }
 
 function PersonalInformationSection() {
-  const { user } = useUser();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('Test');
+  const [lastName, setLastName] = useState('User');
   const [phone, setPhone] = useState('');
   const [homeStage, setHomeStage] = useState<HomeStage | ''>('');
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (user) {
-      const metadata = user.unsafeMetadata as { fullName?: string; phoneNumber?: string; homeStage?: HomeStage };
-      const fullName = metadata.fullName || '';
-      const nameParts = fullName.split(' ');
-      const fName = nameParts[0] || '';
-      const lName = nameParts.slice(1).join(' ') || '';
-
-      setFirstName(fName);
-      setLastName(lName);
-      setPhone(metadata.phoneNumber || '');
-      setHomeStage(metadata.homeStage || '');
-      setIsLoading(false);
-    }
-  }, [user]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const formatPhone = (value: string) => {
     const digits = value.replace(/\D/g, '').slice(0, 10);
@@ -127,17 +109,9 @@ function PersonalInformationSection() {
   };
 
   const handleSave = async () => {
-    if (!user) return;
-
     setIsSaving(true);
     try {
-      await user.update({
-        unsafeMetadata: {
-          fullName: `${firstName.trim()} ${lastName.trim()}`.trim(),
-          phoneNumber: phone,
-          homeStage: homeStage as HomeStage,
-        },
-      });
+      await new Promise(resolve => setTimeout(resolve, 1000));
       setSaveSuccess(true);
       setHasUnsavedChanges(false);
       setTimeout(() => setSaveSuccess(false), 3000);
@@ -225,7 +199,7 @@ function PersonalInformationSection() {
             <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
             <input
               type="email"
-              value={user?.primaryEmailAddress?.emailAddress || ''}
+              value="test@example.com"
               disabled
               className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600"
             />
@@ -563,7 +537,6 @@ function PrivacySecuritySection() {
 }
 
 function DeleteAccountModal({ onClose }: { onClose: () => void }) {
-  const { user } = useUser();
   const [step, setStep] = useState(1);
   const [confirmText, setConfirmText] = useState('');
 
@@ -622,7 +595,7 @@ function DeleteAccountModal({ onClose }: { onClose: () => void }) {
         {step === 2 && (
           <div className="space-y-4">
             <p className="text-sm text-gray-600">
-              We've sent a confirmation code to <strong>{user?.primaryEmailAddress?.emailAddress}</strong>. Enter it below to complete deletion.
+              We've sent a confirmation code to <strong>test@example.com</strong>. Enter it below to complete deletion.
             </p>
 
             <input

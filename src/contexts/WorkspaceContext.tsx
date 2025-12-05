@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useAuth } from '@clerk/clerk-react';
 import { Workspace } from '../types';
 import { getUserWorkspaces, createWorkspace } from '../lib/workspaceApi';
 
@@ -15,25 +14,19 @@ interface WorkspaceContextType {
 
 const WorkspaceContext = createContext<WorkspaceContextType | undefined>(undefined);
 
+const MOCK_USER_ID = 'test-user-123';
+
 export function WorkspaceProvider({ children }: { children: ReactNode }) {
-  const { userId, isLoaded } = useAuth();
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [currentWorkspace, setCurrentWorkspace] = useState<Workspace | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const loadWorkspaces = async () => {
-    if (!userId) {
-      setWorkspaces([]);
-      setCurrentWorkspace(null);
-      setIsLoading(false);
-      return;
-    }
-
     setIsLoading(true);
     setError(null);
 
-    const { data, error: loadError } = await getUserWorkspaces(userId);
+    const { data, error: loadError } = await getUserWorkspaces(MOCK_USER_ID);
 
     if (loadError) {
       setError(loadError);
@@ -59,10 +52,8 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    if (isLoaded) {
-      loadWorkspaces();
-    }
-  }, [userId, isLoaded]);
+    loadWorkspaces();
+  }, []);
 
   const switchWorkspace = (workspaceId: string) => {
     const workspace = workspaces.find(w => w.id === workspaceId);
@@ -77,11 +68,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   };
 
   const createNewWorkspace = async (name: string) => {
-    if (!userId) {
-      return { success: false, error: 'Not authenticated' };
-    }
-
-    const result = await createWorkspace(userId, name);
+    const result = await createWorkspace(MOCK_USER_ID, name);
 
     if (result.success && result.workspace) {
       await refreshWorkspaces();

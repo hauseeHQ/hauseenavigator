@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@clerk/clerk-react';
 import { Home, Copy, CheckCircle, Users, Link as LinkIcon, Loader2 } from 'lucide-react';
 import { useWorkspace } from '../contexts/WorkspaceContext';
 import { createInvitation, getWorkspaceMembers, updateWorkspaceName } from '../lib/workspaceApi';
 import { WorkspaceMember } from '../types';
 
+const MOCK_USER_ID = 'test-user-123';
+
 export default function WorkspaceSettingsPage() {
   const navigate = useNavigate();
-  const { userId } = useAuth();
   const { currentWorkspace, workspaces, switchWorkspace, refreshWorkspaces } = useWorkspace();
 
   const [members, setMembers] = useState<WorkspaceMember[]>([]);
@@ -38,12 +38,12 @@ export default function WorkspaceSettingsPage() {
   };
 
   const handleGenerateInvitation = async () => {
-    if (!currentWorkspace || !userId) return;
+    if (!currentWorkspace) return;
 
     setIsGeneratingLink(true);
     setError('');
 
-    const result = await createInvitation(currentWorkspace.id, userId);
+    const result = await createInvitation(currentWorkspace.id, MOCK_USER_ID);
 
     if (result.success && result.invitation) {
       const link = `${window.location.origin}/workspace/accept?token=${result.invitation.invitationToken}`;
@@ -198,7 +198,7 @@ export default function WorkspaceSettingsPage() {
                     <div>
                       <p className="text-sm font-medium text-gray-900">
                         {member.userId}
-                        {member.userId === userId && (
+                        {member.userId === MOCK_USER_ID && (
                           <span className="ml-2 text-xs text-gray-500">(You)</span>
                         )}
                       </p>

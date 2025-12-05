@@ -1,4 +1,3 @@
-import { useAuth } from '@clerk/clerk-react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { useWorkspace } from '../contexts/WorkspaceContext';
@@ -8,20 +7,15 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isSignedIn, isLoaded } = useAuth();
   const { currentWorkspace, isLoading: workspaceLoading, workspaces } = useWorkspace();
   const location = useLocation();
 
-  if (!isLoaded || workspaceLoading) {
+  if (workspaceLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
       </div>
     );
-  }
-
-  if (!isSignedIn) {
-    return <Navigate to="/signin" replace />;
   }
 
   const isWorkspaceSetupRoute = location.pathname === '/workspace/setup';
