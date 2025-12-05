@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSignIn } from '@clerk/clerk-react';
 import { Loader2 } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 import { validateEmail } from '../utils/validation';
 
 export default function SignInPage() {
-  const { signIn } = useSignIn();
+  const { signIn } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -23,30 +23,16 @@ export default function SignInPage() {
     setIsLoading(true);
 
     try {
-      if (!signIn) {
-        throw new Error('Sign in not initialized');
+      const { error: signInError } = await signIn(email);
+
+      if (signInError) {
+        throw signInError;
       }
-
-      await signIn.create({
-        identifier: email,
-      });
-
-      const { emailAddressId } = signIn.supportedFirstFactors.find(
-        (factor: any) => factor.strategy === 'email_link' && factor.emailAddressId
-      ) as any;
-
-      const redirectUrl = `${window.location.origin}/verify-email`;
-
-      await signIn.prepareFirstFactor({
-        strategy: 'email_link',
-        emailAddressId,
-        redirectUrl: redirectUrl
-      });
 
       navigate('/verify-email', { state: { email } });
     } catch (err: any) {
       console.error('Sign in error:', err);
-      setError(err.errors?.[0]?.message || 'An error occurred. Please try again.');
+      setError(err.message || 'An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSignUp } from '@clerk/clerk-react';
 import { Loader2 } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 import { SignUpFormData, FormErrors, UserMetadata } from '../types';
 import { validateEmail, validatePhoneNumber, formatPhoneNumber } from '../utils/validation';
 
 export default function SignUpPage() {
-  const { signUp } = useSignUp();
+  const { signUp } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<SignUpFormData>({
@@ -60,33 +60,23 @@ export default function SignUpPage() {
     setIsLoading(true);
 
     try {
-      if (!signUp) {
-        throw new Error('Sign up not initialized');
-      }
-
-      const metadata: UserMetadata = {
+      const metadata = {
         fullName: formData.fullName.trim(),
         phoneNumber: formData.phoneNumber || undefined,
-        homeStage: formData.homeStage as UserMetadata['homeStage'],
+        homeStage: formData.homeStage,
       };
 
-      await signUp.create({
-        emailAddress: formData.email,
-        unsafeMetadata: metadata,
-      });
+      const { error: signUpError } = await signUp(formData.email, metadata);
 
-      const redirectUrl = `${window.location.origin}/verify-email`;
-
-      await signUp.prepareEmailAddressVerification({
-        strategy: 'email_link',
-        redirectUrl: redirectUrl
-      });
+      if (signUpError) {
+        throw signUpError;
+      }
 
       navigate('/verify-email', { state: { email: formData.email } });
     } catch (err: any) {
       console.error('Sign up error:', err);
       setErrors({
-        email: err.errors?.[0]?.message || 'An error occurred. Please try again.',
+        email: err.message || 'An error occurred. Please try again.',
       });
     } finally {
       setIsLoading(false);

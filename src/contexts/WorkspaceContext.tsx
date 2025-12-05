@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useUser } from '@clerk/clerk-react';
+import { useAuth } from './AuthContext';
 import { Workspace } from '../types';
 import { getUserWorkspaces, createWorkspace } from '../lib/workspaceApi';
 
@@ -16,7 +16,7 @@ interface WorkspaceContextType {
 const WorkspaceContext = createContext<WorkspaceContextType | undefined>(undefined);
 
 export function WorkspaceProvider({ children }: { children: ReactNode }) {
-  const { user, isLoaded: userLoaded } = useUser();
+  const { user, isLoaded } = useAuth();
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [currentWorkspace, setCurrentWorkspace] = useState<Workspace | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,10 +57,10 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    if (userLoaded && user) {
+    if (isLoaded && user) {
       loadWorkspaces();
     }
-  }, [userLoaded, user?.id]);
+  }, [isLoaded, user?.id]);
 
   const switchWorkspace = (workspaceId: string) => {
     const workspace = workspaces.find(w => w.id === workspaceId);

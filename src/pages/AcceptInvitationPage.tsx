@@ -3,13 +3,13 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Home, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { getInvitationByToken, acceptInvitation } from '../lib/workspaceApi';
 import { useWorkspace } from '../contexts/WorkspaceContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Workspace } from '../types';
-
-const MOCK_USER_ID = 'test-user-123';
 
 export default function AcceptInvitationPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { user } = useAuth();
   const { refreshWorkspaces, switchWorkspace } = useWorkspace();
 
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
@@ -44,12 +44,12 @@ export default function AcceptInvitationPage() {
   }, [token, navigate]);
 
   const handleAccept = async () => {
-    if (!token) return;
+    if (!token || !user?.id) return;
 
     setIsAccepting(true);
     setError('');
 
-    const result = await acceptInvitation(token, MOCK_USER_ID);
+    const result = await acceptInvitation(token, user.id);
 
     if (result.success && result.workspaceId) {
       await refreshWorkspaces();
