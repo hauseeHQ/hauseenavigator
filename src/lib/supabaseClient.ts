@@ -29,11 +29,13 @@ export interface DreamHomeDbRecord {
 
 export async function saveDreamHome(
   userId: string,
+  workspaceId: string,
   data: DreamHome
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const record = {
       user_id: userId,
+      workspace_id: workspaceId,
       construction_status: data.constructionStatus,
       price_min: data.priceRange.min,
       price_max: data.priceRange.max,
@@ -50,7 +52,7 @@ export async function saveDreamHome(
     const { error } = await supabase
       .from('dream_home_preferences')
       .upsert(record, {
-        onConflict: 'user_id',
+        onConflict: 'user_id,workspace_id',
       });
 
     if (error) {
@@ -69,13 +71,13 @@ export async function saveDreamHome(
 }
 
 export async function loadDreamHome(
-  userId: string
+  workspaceId: string
 ): Promise<{ data: DreamHome | null; error?: string }> {
   try {
     const { data, error } = await supabase
       .from('dream_home_preferences')
       .select('*')
-      .eq('user_id', userId)
+      .eq('workspace_id', workspaceId)
       .maybeSingle();
 
     if (error) {
@@ -129,11 +131,13 @@ export interface AssessmentDbRecord {
 
 export async function saveAssessment(
   userId: string,
+  workspaceId: string,
   data: SelfAssessment
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const record = {
       user_id: userId,
+      workspace_id: workspaceId,
       answers: data.answers,
       completed_at: data.completedAt,
       score: data.score,
@@ -145,7 +149,7 @@ export async function saveAssessment(
     const { error } = await supabase
       .from('self_assessment_responses')
       .upsert(record, {
-        onConflict: 'user_id',
+        onConflict: 'user_id,workspace_id',
       });
 
     if (error) {
@@ -164,13 +168,13 @@ export async function saveAssessment(
 }
 
 export async function loadAssessment(
-  userId: string
+  workspaceId: string
 ): Promise<{ data: SelfAssessment | null; error?: string }> {
   try {
     const { data, error } = await supabase
       .from('self_assessment_responses')
       .select('*')
-      .eq('user_id', userId)
+      .eq('workspace_id', workspaceId)
       .maybeSingle();
 
     if (error) {
@@ -214,11 +218,13 @@ export interface ChecklistDbRecord {
 
 export async function saveMortgageChecklist(
   userId: string,
+  workspaceId: string,
   data: MortgageChecklist
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const record = {
       user_id: userId,
+      workspace_id: workspaceId,
       items: data.items,
       progress: data.progress,
       updated_at: new Date().toISOString(),
@@ -227,7 +233,7 @@ export async function saveMortgageChecklist(
     const { error } = await supabase
       .from('mortgage_checklist_items')
       .upsert(record, {
-        onConflict: 'user_id',
+        onConflict: 'user_id,workspace_id',
       });
 
     if (error) {
@@ -246,13 +252,13 @@ export async function saveMortgageChecklist(
 }
 
 export async function loadMortgageChecklist(
-  userId: string
+  workspaceId: string
 ): Promise<{ data: MortgageChecklist | null; error?: string }> {
   try {
     const { data, error } = await supabase
       .from('mortgage_checklist_items')
       .select('*')
-      .eq('user_id', userId)
+      .eq('workspace_id', workspaceId)
       .maybeSingle();
 
     if (error) {
@@ -293,11 +299,13 @@ export interface MovingTodoDbRecord {
 
 export async function saveMovingTodoList(
   userId: string,
+  workspaceId: string,
   data: MovingTodoList
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const record = {
       user_id: userId,
+      workspace_id: workspaceId,
       items: data.items,
       progress: data.progress,
       updated_at: new Date().toISOString(),
@@ -306,7 +314,7 @@ export async function saveMovingTodoList(
     const { error } = await supabase
       .from('moving_todo_items')
       .upsert(record, {
-        onConflict: 'user_id',
+        onConflict: 'user_id,workspace_id',
       });
 
     if (error) {
@@ -325,13 +333,13 @@ export async function saveMovingTodoList(
 }
 
 export async function loadMovingTodoList(
-  userId: string
+  workspaceId: string
 ): Promise<{ data: MovingTodoList | null; error?: string }> {
   try {
     const { data, error } = await supabase
       .from('moving_todo_items')
       .select('*')
-      .eq('user_id', userId)
+      .eq('workspace_id', workspaceId)
       .maybeSingle();
 
     if (error) {
@@ -373,11 +381,13 @@ export interface BudgetPlannerDbRecord {
 
 export async function saveBudgetPlanner(
   userId: string,
+  workspaceId: string,
   data: BudgetPlannerData
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const record = {
       user_id: userId,
+      workspace_id: workspaceId,
       current_budget: data.budget,
       homeowner_budget: {},
       calculations: data.calculations,
@@ -387,7 +397,7 @@ export async function saveBudgetPlanner(
     const { error } = await supabase
       .from('budget_planner')
       .upsert(record, {
-        onConflict: 'user_id',
+        onConflict: 'user_id,workspace_id',
       });
 
     if (error) {
@@ -406,13 +416,13 @@ export async function saveBudgetPlanner(
 }
 
 export async function loadBudgetPlanner(
-  userId: string
+  workspaceId: string
 ): Promise<{ data: BudgetPlannerData | null; error?: string }> {
   try {
     const { data, error } = await supabase
       .from('budget_planner')
       .select('*')
-      .eq('user_id', userId)
+      .eq('workspace_id', workspaceId)
       .maybeSingle();
 
     if (error) {
@@ -456,11 +466,13 @@ export interface DownPaymentTrackerDbRecord {
 
 export async function saveDownPaymentTracker(
   userId: string,
+  workspaceId: string,
   data: DownPaymentTrackerData
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const record = {
       user_id: userId,
+      workspace_id: workspaceId,
       goal: data.goal,
       accounts: data.accounts,
       contributions: data.contributions,
@@ -472,7 +484,7 @@ export async function saveDownPaymentTracker(
     const { error } = await supabase
       .from('down_payment_tracker')
       .upsert(record, {
-        onConflict: 'user_id',
+        onConflict: 'user_id,workspace_id',
       });
 
     if (error) {
@@ -491,13 +503,13 @@ export async function saveDownPaymentTracker(
 }
 
 export async function loadDownPaymentTracker(
-  userId: string
+  workspaceId: string
 ): Promise<{ data: DownPaymentTrackerData | null; error?: string }> {
   try {
     const { data, error } = await supabase
       .from('down_payment_tracker')
       .select('*')
-      .eq('user_id', userId)
+      .eq('workspace_id', workspaceId)
       .maybeSingle();
 
     if (error) {
@@ -530,12 +542,12 @@ export async function loadDownPaymentTracker(
   }
 }
 
-export async function loadHomes(userId: string): Promise<{ data: Home[] | null; error?: string }> {
+export async function loadHomes(workspaceId: string): Promise<{ data: Home[] | null; error?: string }> {
   try {
     const { data, error } = await supabase
       .from('homes')
       .select('*')
-      .eq('user_id', userId)
+      .eq('workspace_id', workspaceId)
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -577,12 +589,13 @@ export async function loadHomes(userId: string): Promise<{ data: Home[] | null; 
 
 export async function addHome(
   userId: string,
+  workspaceId: string,
   formData: AddHomeFormData
 ): Promise<{ success: boolean; error?: string; home?: Home }> {
   try {
     const record = {
       user_id: userId,
-      workspace_id: userId,
+      workspace_id: workspaceId,
       address: formData.address,
       neighborhood: formData.neighborhood,
       price: formData.price,
@@ -710,14 +723,14 @@ export async function deleteHome(homeId: string): Promise<{ success: boolean; er
 
 export async function loadEvaluation(
   homeId: string,
-  userId: string
+  workspaceId: string
 ): Promise<{ data: HomeEvaluation | null; error?: string }> {
   try {
     const { data, error } = await supabase
       .from('home_evaluations')
       .select('*')
       .eq('home_id', homeId)
-      .eq('user_id', userId)
+      .eq('workspace_id', workspaceId)
       .maybeSingle();
 
     if (error) {
@@ -756,12 +769,13 @@ export async function loadEvaluation(
 }
 
 export async function saveEvaluation(
-  evaluation: Partial<HomeEvaluation> & { homeId: string; userId: string }
+  evaluation: Partial<HomeEvaluation> & { homeId: string; userId: string; workspaceId: string }
 ): Promise<{ success: boolean; error?: string; data?: HomeEvaluation }> {
   try {
     const record = {
       home_id: evaluation.homeId,
       user_id: evaluation.userId,
+      workspace_id: evaluation.workspaceId,
       ratings: evaluation.ratings || {},
       item_notes: evaluation.itemNotes || {},
       section_notes: evaluation.sectionNotes || {},
@@ -776,7 +790,7 @@ export async function saveEvaluation(
     const { data, error } = await supabase
       .from('home_evaluations')
       .upsert(record, {
-        onConflict: 'home_id,user_id',
+        onConflict: 'home_id,workspace_id',
       })
       .select()
       .single();

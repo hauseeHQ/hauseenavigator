@@ -601,3 +601,31 @@ export interface EvaluationVoiceNote {
   transcript?: string;
   createdAt: string;
 }
+
+export interface Workspace {
+  id: string;
+  name: string;
+  createdBy: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface WorkspaceMember {
+  id: string;
+  workspaceId: string;
+  userId: string;
+  role: 'owner' | 'member';
+  joinedAt: string;
+  createdAt: string;
+}
+
+export interface WorkspaceInvitation {
+  id: string;
+  workspaceId: string;
+  invitationToken: string;
+  createdBy: string;
+  expiresAt: string;
+  usedAt?: string;
+  usedBy?: string;
+  createdAt: string;
+}
