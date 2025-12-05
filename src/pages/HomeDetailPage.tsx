@@ -8,6 +8,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import EvaluationModal from '../components/evaluation/EvaluationModal';
 
 const TEMP_USER_ID = 'temp-user-demo';
+const TEMP_WORKSPACE_ID = 'temp-workspace-demo';
 
 export default function HomeDetailPage() {
   const { homeId } = useParams<{ homeId: string }>();
@@ -30,13 +31,13 @@ export default function HomeDetailPage() {
 
     setIsLoading(true);
     try {
-      const { data: homes } = await loadHomes(TEMP_USER_ID);
+      const { data: homes } = await loadHomes(TEMP_WORKSPACE_ID);
       const foundHome = homes?.find((h) => h.id === homeId);
 
       if (foundHome) {
         setHome(foundHome);
 
-        const { data: evalData } = await loadEvaluation(homeId, TEMP_USER_ID);
+        const { data: evalData } = await loadEvaluation(homeId, TEMP_WORKSPACE_ID);
         if (evalData) {
           setEvaluation(evalData);
         }
@@ -79,12 +80,12 @@ export default function HomeDetailPage() {
 
   const handleEvaluationUpdate = async () => {
     if (homeId) {
-      const { data: evalData } = await loadEvaluation(homeId, TEMP_USER_ID);
+      const { data: evalData } = await loadEvaluation(homeId, TEMP_WORKSPACE_ID);
       if (evalData) {
         setEvaluation(evalData);
       }
 
-      const { data: homes } = await loadHomes(TEMP_USER_ID);
+      const { data: homes } = await loadHomes(TEMP_WORKSPACE_ID);
       const updatedHome = homes?.find((h) => h.id === homeId);
       if (updatedHome) {
         setHome(updatedHome);

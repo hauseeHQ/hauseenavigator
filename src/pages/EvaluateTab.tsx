@@ -9,6 +9,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { useToast } from '../components/ToastContainer';
 
 const TEMP_USER_ID = 'temp-user-demo';
+const TEMP_WORKSPACE_ID = 'temp-workspace-demo';
 
 export default function EvaluateTab() {
   const [activeTab, setActiveTab] = useState<EvaluateTabType>('browse');
@@ -25,7 +26,7 @@ export default function EvaluateTab() {
   const loadHomesData = async () => {
     setIsLoading(true);
     try {
-      const { data } = await loadHomes(TEMP_USER_ID);
+      const { data } = await loadHomes(TEMP_WORKSPACE_ID);
       if (data) {
         setHomes(data);
       }
@@ -61,7 +62,7 @@ export default function EvaluateTab() {
   };
 
   const handleAddHome = async (formData: AddHomeFormData) => {
-    const result = await addHome(TEMP_USER_ID, formData);
+    const result = await addHome(TEMP_USER_ID, TEMP_WORKSPACE_ID, formData);
     if (result.success && result.home) {
       setHomes([result.home, ...homes]);
       setShowAddModal(false);
