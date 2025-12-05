@@ -73,7 +73,7 @@ export default function AITab() {
           <div className="flex flex-col items-center gap-4">
             <button
               onClick={handleChatClick}
-              className="w-full sm:w-auto min-w-[280px] h-14 bg-red-400 hover:bg-red-500 text-white font-semibold text-lg rounded-full transition-all duration-200 hover:scale-102 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group"
+              className="w-full sm:w-auto min-w-[280px] h-14 bg-primary-400 hover:bg-primary-500 text-white font-semibold text-lg rounded-full transition-all duration-200 hover:scale-102 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group"
               aria-label="Open chat with Brix in a new window"
             >
               <span className="text-2xl">💬</span>

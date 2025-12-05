@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSignUp } from '@clerk/clerk-react';
-import { Loader2, Home } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { SignUpFormData, FormErrors, UserMetadata } from '../types';
 import { validateEmail, validatePhoneNumber, formatPhoneNumber } from '../utils/validation';
 
@@ -97,7 +97,11 @@ export default function SignUpPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <Home className="w-10 h-10 text-primary-400" />
+          <img
+            src="/hausee-logo.png"
+            alt="Hausee Navigator"
+            className="w-14 h-14 object-contain"
+          />
         </div>
         <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
           Create your account

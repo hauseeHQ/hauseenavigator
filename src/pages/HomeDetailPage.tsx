@@ -132,7 +132,7 @@ export default function HomeDetailPage() {
           className="absolute top-4 right-4 w-12 h-12 bg-white/90 backdrop-blur rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-colors"
         >
           <Heart
-            className={`w-6 h-6 ${home.favorite ? 'fill-red-400 text-red-400' : 'text-gray-600'}`}
+            className={`w-6 h-6 ${home.favorite ? 'fill-primary-400 text-primary-400' : 'text-gray-600'}`}
           />
         </button>
 
@@ -211,7 +211,7 @@ export default function HomeDetailPage() {
 
           <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
             <h3 className="text-lg font-bold text-gray-900 mb-2">Listing Price</h3>
-            <p className="text-3xl font-bold text-red-400">{formatCurrency(home.price)}</p>
+            <p className="text-3xl font-bold text-primary-400">{formatCurrency(home.price)}</p>
             {home.propertyTaxes && (
               <p className="text-sm text-gray-600 mt-2">
                 Property taxes: {formatCurrency(home.propertyTaxes)}/year
@@ -229,7 +229,7 @@ export default function HomeDetailPage() {
             </div>
             <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
               <div
-                className="h-full bg-red-400 transition-all duration-300"
+                className="h-full bg-primary-400 transition-all duration-300"
                 style={{ width: `${evaluation ? evaluation.completionPercentage : 0}%` }}
               />
             </div>
@@ -248,7 +248,7 @@ export default function HomeDetailPage() {
           </p>
           <button
             onClick={() => setShowEvaluationModal(true)}
-            className="px-8 py-4 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-colors font-medium text-lg shadow-md hover:shadow-lg"
+            className="px-8 py-4 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors font-medium text-lg shadow-md hover:shadow-lg"
           >
             {evaluation && evaluation.evaluationStatus !== 'not_started'
               ? 'Continue Evaluation'

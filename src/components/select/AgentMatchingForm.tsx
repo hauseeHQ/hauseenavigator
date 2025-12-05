@@ -219,7 +219,7 @@ export default function AgentMatchingForm({ onComplete }: AgentMatchingFormProps
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${
                     formData.currentStep >= step.num
-                      ? 'bg-red-400 text-white'
+                      ? 'bg-primary-400 text-white'
                       : 'bg-gray-200 text-gray-500'
                   }`}
                 >
@@ -227,7 +227,7 @@ export default function AgentMatchingForm({ onComplete }: AgentMatchingFormProps
                 </div>
                 <span
                   className={`text-xs mt-2 font-medium hidden md:block ${
-                    formData.currentStep >= step.num ? 'text-red-400' : 'text-gray-500'
+                    formData.currentStep >= step.num ? 'text-primary-400' : 'text-gray-500'
                   }`}
                 >
                   {step.label}
@@ -236,7 +236,7 @@ export default function AgentMatchingForm({ onComplete }: AgentMatchingFormProps
               {index < steps.length - 1 && (
                 <div
                   className={`h-1 flex-1 mx-2 transition-colors ${
-                    formData.currentStep > step.num ? 'bg-red-400' : 'bg-gray-200'
+                    formData.currentStep > step.num ? 'bg-primary-400' : 'bg-gray-200'
                   }`}
                 />
               )}
@@ -341,7 +341,7 @@ function Step1ContactInfo({ formData, setFormData, errors, onNext }: StepProps) 
                     aboutYou: { ...prev.aboutYou, firstName: e.target.value },
                   }))
                 }
-                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 ${
+                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 ${
                   errors.firstName ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="John"
@@ -370,7 +370,7 @@ function Step1ContactInfo({ formData, setFormData, errors, onNext }: StepProps) 
                     aboutYou: { ...prev.aboutYou, lastName: e.target.value },
                   }))
                 }
-                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 ${
+                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 ${
                   errors.lastName ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Doe"
@@ -415,7 +415,7 @@ function Step1ContactInfo({ formData, setFormData, errors, onNext }: StepProps) 
                   aboutYou: { ...prev.aboutYou, phone: formatPhone(e.target.value) },
                 }))
               }
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 ${
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 ${
                 errors.phone ? 'border-red-500' : 'border-gray-300'
               }`}
               placeholder="(555) 123-4567"
@@ -443,7 +443,7 @@ function Step1ContactInfo({ formData, setFormData, errors, onNext }: StepProps) 
               }
               className={`flex-1 py-3 rounded-lg font-medium transition-colors ${
                 formData.aboutYou.hasReferral
-                  ? 'bg-red-400 text-white'
+                  ? 'bg-primary-400 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -458,7 +458,7 @@ function Step1ContactInfo({ formData, setFormData, errors, onNext }: StepProps) 
               }
               className={`flex-1 py-3 rounded-lg font-medium transition-colors ${
                 !formData.aboutYou.hasReferral
-                  ? 'bg-red-400 text-white'
+                  ? 'bg-primary-400 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -477,7 +477,7 @@ function Step1ContactInfo({ formData, setFormData, errors, onNext }: StepProps) 
                     aboutYou: { ...prev.aboutYou, referralCode: e.target.value },
                   }))
                 }
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 ${
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 ${
                   errors.referralCode ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Enter referral code"
@@ -496,7 +496,7 @@ function Step1ContactInfo({ formData, setFormData, errors, onNext }: StepProps) 
       <div className="mt-8 flex justify-end">
         <button
           onClick={onNext}
-          className="px-6 py-3 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-colors font-medium flex items-center gap-2"
+          className="px-6 py-3 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors font-medium flex items-center gap-2"
         >
           Continue
           <ChevronRight className="w-5 h-5" />
@@ -522,17 +522,17 @@ function Step2PropertyIntent({ formData, setFormData, errors, onNext, onBack }: 
           }
           className={`p-8 rounded-lg border-2 transition-all text-left hover:shadow-lg ${
             formData.propertyIntent === 'buying'
-              ? 'border-red-400 bg-red-50 shadow-md'
-              : 'border-gray-200 hover:border-red-200'
+              ? 'border-primary-400 bg-primary-50 shadow-md'
+              : 'border-gray-200 hover:border-primary-200'
           }`}
         >
-          <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-            <Home className="w-8 h-8 text-red-400" />
+          <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
+            <Home className="w-8 h-8 text-primary-400" />
           </div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">Buying a home</h3>
           <p className="text-gray-600">Looking to purchase your dream property</p>
           {formData.propertyIntent === 'buying' && (
-            <div className="mt-4 flex items-center gap-2 text-red-400 font-medium">
+            <div className="mt-4 flex items-center gap-2 text-primary-400 font-medium">
               <CheckCircle2 className="w-5 h-5" />
               Selected
             </div>
@@ -548,17 +548,17 @@ function Step2PropertyIntent({ formData, setFormData, errors, onNext, onBack }: 
           }
           className={`p-8 rounded-lg border-2 transition-all text-left hover:shadow-lg ${
             formData.propertyIntent === 'selling'
-              ? 'border-red-400 bg-red-50 shadow-md'
-              : 'border-gray-200 hover:border-red-200'
+              ? 'border-primary-400 bg-primary-50 shadow-md'
+              : 'border-gray-200 hover:border-primary-200'
           }`}
         >
-          <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-            <DollarSign className="w-8 h-8 text-red-400" />
+          <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
+            <DollarSign className="w-8 h-8 text-primary-400" />
           </div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">Selling a property</h3>
           <p className="text-gray-600">Ready to list your property for sale</p>
           {formData.propertyIntent === 'selling' && (
-            <div className="mt-4 flex items-center gap-2 text-red-400 font-medium">
+            <div className="mt-4 flex items-center gap-2 text-primary-400 font-medium">
               <CheckCircle2 className="w-5 h-5" />
               Selected
             </div>
@@ -583,7 +583,7 @@ function Step2PropertyIntent({ formData, setFormData, errors, onNext, onBack }: 
         </button>
         <button
           onClick={onNext}
-          className="px-6 py-3 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-colors font-medium flex items-center gap-2"
+          className="px-6 py-3 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors font-medium flex items-center gap-2"
         >
           Continue
           <ChevronRight className="w-5 h-5" />
@@ -669,7 +669,7 @@ function Step3ABuyerQuestions({ formData, setFormData, errors, onNext, onBack }:
                 setShowCityDropdown(true);
               }}
               onFocus={() => setShowCityDropdown(true)}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 ${
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 ${
                 errors.preferredCities ? 'border-red-500' : 'border-gray-300'
               }`}
               placeholder="Search for cities..."
@@ -693,12 +693,12 @@ function Step3ABuyerQuestions({ formData, setFormData, errors, onNext, onBack }:
             {formData.buyerQuestions!.preferredCities.map((city) => (
               <span
                 key={city}
-                className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 text-red-700 rounded-full text-sm"
+                className="inline-flex items-center gap-2 px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm"
               >
                 {city}
                 <button
                   onClick={() => removeCity(city)}
-                  className="hover:bg-red-100 rounded-full p-0.5 transition-colors"
+                  className="hover:bg-primary-100 rounded-full p-0.5 transition-colors"
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -719,10 +719,10 @@ function Step3ABuyerQuestions({ formData, setFormData, errors, onNext, onBack }:
           </label>
           <div className="px-4 py-6 bg-gray-50 rounded-lg">
             <div className="flex justify-between text-sm text-gray-600 mb-4">
-              <span className="font-bold text-red-400">
+              <span className="font-bold text-primary-400">
                 {formatCurrency(formData.buyerQuestions!.priceRange.min)}
               </span>
-              <span className="font-bold text-red-400">
+              <span className="font-bold text-primary-400">
                 {formatCurrency(formData.buyerQuestions!.priceRange.max)}
               </span>
             </div>
@@ -757,8 +757,8 @@ function Step3ABuyerQuestions({ formData, setFormData, errors, onNext, onBack }:
                 onClick={() => togglePropertyType(type)}
                 className={`px-4 py-3 rounded-lg border-2 transition-all font-medium ${
                   formData.buyerQuestions!.propertyTypes.includes(type)
-                    ? 'border-red-400 bg-red-50 text-red-700'
-                    : 'border-gray-200 text-gray-700 hover:border-red-200'
+                    ? 'border-primary-400 bg-primary-50 text-primary-700'
+                    : 'border-gray-200 text-gray-700 hover:border-primary-200'
                 }`}
               >
                 {type}
@@ -785,7 +785,7 @@ function Step3ABuyerQuestions({ formData, setFormData, errors, onNext, onBack }:
                 buyerQuestions: { ...prev.buyerQuestions!, timeline: e.target.value },
               }))
             }
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 ${
               errors.timeline ? 'border-red-500' : 'border-gray-300'
             }`}
           >
@@ -828,7 +828,7 @@ function Step3ABuyerQuestions({ formData, setFormData, errors, onNext, onBack }:
                       },
                     }))
                   }
-                  className="w-4 h-4 text-red-400 focus:ring-red-400"
+                  className="w-4 h-4 text-primary-400 focus:ring-primary-400"
                 />
                 <span className="text-gray-900">{option.label}</span>
               </label>
@@ -853,7 +853,7 @@ function Step3ABuyerQuestions({ formData, setFormData, errors, onNext, onBack }:
                   buyerQuestions: { ...prev.buyerQuestions!, hasCurrentAgent: e.target.checked },
                 }))
               }
-              className="w-5 h-5 text-red-400 focus:ring-red-400"
+              className="w-5 h-5 text-primary-400 focus:ring-primary-400"
             />
             <div>
               <div className="font-medium text-gray-900">I currently have a real estate agent</div>
@@ -878,7 +878,7 @@ function Step3ABuyerQuestions({ formData, setFormData, errors, onNext, onBack }:
             }
             maxLength={500}
             rows={4}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 resize-none"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 resize-none"
             placeholder="Any specific requirements or preferences..."
           />
           <div className="text-xs text-gray-500 text-right mt-1">
@@ -897,7 +897,7 @@ function Step3ABuyerQuestions({ formData, setFormData, errors, onNext, onBack }:
         </button>
         <button
           onClick={onNext}
-          className="px-6 py-3 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-colors font-medium flex items-center gap-2"
+          className="px-6 py-3 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors font-medium flex items-center gap-2"
         >
           Continue
           <ChevronRight className="w-5 h-5" />
@@ -946,7 +946,7 @@ function Step3BSellerQuestions({ formData, setFormData, errors, onNext, onBack }
                       sellerQuestions: { ...prev.sellerQuestions!, propertyType: e.target.value },
                     }))
                   }
-                  className="w-4 h-4 text-red-400 focus:ring-red-400"
+                  className="w-4 h-4 text-primary-400 focus:ring-primary-400"
                 />
                 <span className="text-gray-900">{type}</span>
               </label>
@@ -973,7 +973,7 @@ function Step3BSellerQuestions({ formData, setFormData, errors, onNext, onBack }
                 sellerQuestions: { ...prev.sellerQuestions!, propertyLocation: e.target.value },
               }))
             }
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 ${
               errors.propertyLocation ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="City, Province"
@@ -1003,7 +1003,7 @@ function Step3BSellerQuestions({ formData, setFormData, errors, onNext, onBack }
                 },
               }))
             }}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 ${
               errors.estimatedValue ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="$500,000"
@@ -1028,7 +1028,7 @@ function Step3BSellerQuestions({ formData, setFormData, errors, onNext, onBack }
                 sellerQuestions: { ...prev.sellerQuestions!, sellingTimeline: e.target.value },
               }))
             }
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 ${
               errors.sellingTimeline ? 'border-red-500' : 'border-gray-300'
             }`}
           >
@@ -1058,7 +1058,7 @@ function Step3BSellerQuestions({ formData, setFormData, errors, onNext, onBack }
                 sellerQuestions: { ...prev.sellerQuestions!, sellingReason: e.target.value },
               }))
             }
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 ${
               errors.sellingReason ? 'border-red-500' : 'border-gray-300'
             }`}
           >
@@ -1089,7 +1089,7 @@ function Step3BSellerQuestions({ formData, setFormData, errors, onNext, onBack }
                 sellerQuestions: { ...prev.sellerQuestions!, propertyCondition: e.target.value },
               }))
             }
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 ${
               errors.propertyCondition ? 'border-red-500' : 'border-gray-300'
             }`}
           >
@@ -1121,7 +1121,7 @@ function Step3BSellerQuestions({ formData, setFormData, errors, onNext, onBack }
             }
             maxLength={500}
             rows={4}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 resize-none"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 resize-none"
             placeholder="Any additional details about your property..."
           />
           <div className="text-xs text-gray-500 text-right mt-1">
@@ -1140,7 +1140,7 @@ function Step3BSellerQuestions({ formData, setFormData, errors, onNext, onBack }
         </button>
         <button
           onClick={onNext}
-          className="px-6 py-3 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-colors font-medium flex items-center gap-2"
+          className="px-6 py-3 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors font-medium flex items-center gap-2"
         >
           Continue
           <ChevronRight className="w-5 h-5" />
@@ -1176,7 +1176,7 @@ function Step4Review({ formData, setFormData, errors, onSubmit, onBack, goToStep
             <h3 className="font-bold text-gray-900">Contact Information</h3>
             <button
               onClick={() => goToStep(1)}
-              className="text-red-400 hover:text-red-500 transition-colors flex items-center gap-1 text-sm"
+              className="text-primary-400 hover:text-primary-500 transition-colors flex items-center gap-1 text-sm"
             >
               <Edit className="w-4 h-4" />
               Edit
@@ -1211,14 +1211,14 @@ function Step4Review({ formData, setFormData, errors, onSubmit, onBack, goToStep
             <h3 className="font-bold text-gray-900">Property Intent</h3>
             <button
               onClick={() => goToStep(2)}
-              className="text-red-400 hover:text-red-500 transition-colors flex items-center gap-1 text-sm"
+              className="text-primary-400 hover:text-primary-500 transition-colors flex items-center gap-1 text-sm"
             >
               <Edit className="w-4 h-4" />
               Edit
             </button>
           </div>
           <div className="text-sm">
-            <span className="inline-flex items-center px-3 py-1 bg-red-50 text-red-700 rounded-full font-medium">
+            <span className="inline-flex items-center px-3 py-1 bg-primary-50 text-primary-700 rounded-full font-medium">
               {formData.propertyIntent === 'buying' ? 'Buying a home' : 'Selling a property'}
             </span>
           </div>
@@ -1230,7 +1230,7 @@ function Step4Review({ formData, setFormData, errors, onSubmit, onBack, goToStep
               <h3 className="font-bold text-gray-900">Buyer Requirements</h3>
               <button
                 onClick={() => goToStep(3)}
-                className="text-red-400 hover:text-red-500 transition-colors flex items-center gap-1 text-sm"
+                className="text-primary-400 hover:text-primary-500 transition-colors flex items-center gap-1 text-sm"
               >
                 <Edit className="w-4 h-4" />
                 Edit
@@ -1280,7 +1280,7 @@ function Step4Review({ formData, setFormData, errors, onSubmit, onBack, goToStep
               <h3 className="font-bold text-gray-900">Property Details</h3>
               <button
                 onClick={() => goToStep(3)}
-                className="text-red-400 hover:text-red-500 transition-colors flex items-center gap-1 text-sm"
+                className="text-primary-400 hover:text-primary-500 transition-colors flex items-center gap-1 text-sm"
               >
                 <Edit className="w-4 h-4" />
                 Edit
@@ -1319,7 +1319,7 @@ function Step4Review({ formData, setFormData, errors, onSubmit, onBack, goToStep
           </div>
         )}
 
-        <div className="p-4 border-2 border-red-100 bg-red-50 rounded-lg">
+        <div className="p-4 border-2 border-primary-100 bg-primary-50 rounded-lg">
           <h3 className="font-bold text-gray-900 mb-4">Consent & Privacy</h3>
           <div className="space-y-4">
             <label className="flex items-start gap-3 cursor-pointer">
@@ -1332,7 +1332,7 @@ function Step4Review({ formData, setFormData, errors, onSubmit, onBack, goToStep
                     consent: { ...prev.consent, contactConsent: e.target.checked },
                   }))
                 }
-                className="w-5 h-5 text-red-400 focus:ring-red-400 mt-0.5"
+                className="w-5 h-5 text-primary-400 focus:ring-primary-400 mt-0.5"
               />
               <div className="text-sm">
                 <div className="font-medium text-gray-900">
@@ -1360,7 +1360,7 @@ function Step4Review({ formData, setFormData, errors, onSubmit, onBack, goToStep
                     consent: { ...prev.consent, sharingConsent: e.target.checked },
                   }))
                 }
-                className="w-5 h-5 text-red-400 focus:ring-red-400 mt-0.5"
+                className="w-5 h-5 text-primary-400 focus:ring-primary-400 mt-0.5"
               />
               <div className="text-sm">
                 <div className="font-medium text-gray-900">
@@ -1396,7 +1396,7 @@ function Step4Review({ formData, setFormData, errors, onSubmit, onBack, goToStep
         </button>
         <button
           onClick={onSubmit}
-          className="px-8 py-3 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-colors font-medium flex items-center gap-2"
+          className="px-8 py-3 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors font-medium flex items-center gap-2"
         >
           Submit Request
           <CheckCircle2 className="w-5 h-5" />
@@ -1427,7 +1427,7 @@ function Step5Confirmation({ onComplete }: Step5Props) {
         <h3 className="font-bold text-gray-900 mb-4">What happens next?</h3>
         <div className="space-y-4">
           <div className="flex gap-4">
-            <div className="flex-shrink-0 w-8 h-8 bg-red-400 text-white rounded-full flex items-center justify-center font-bold text-sm">
+            <div className="flex-shrink-0 w-8 h-8 bg-primary-400 text-white rounded-full flex items-center justify-center font-bold text-sm">
               1
             </div>
             <div>
@@ -1439,7 +1439,7 @@ function Step5Confirmation({ onComplete }: Step5Props) {
           </div>
 
           <div className="flex gap-4">
-            <div className="flex-shrink-0 w-8 h-8 bg-red-400 text-white rounded-full flex items-center justify-center font-bold text-sm">
+            <div className="flex-shrink-0 w-8 h-8 bg-primary-400 text-white rounded-full flex items-center justify-center font-bold text-sm">
               2
             </div>
             <div>
@@ -1451,7 +1451,7 @@ function Step5Confirmation({ onComplete }: Step5Props) {
           </div>
 
           <div className="flex gap-4">
-            <div className="flex-shrink-0 w-8 h-8 bg-red-400 text-white rounded-full flex items-center justify-center font-bold text-sm">
+            <div className="flex-shrink-0 w-8 h-8 bg-primary-400 text-white rounded-full flex items-center justify-center font-bold text-sm">
               3
             </div>
             <div>
@@ -1463,7 +1463,7 @@ function Step5Confirmation({ onComplete }: Step5Props) {
           </div>
 
           <div className="flex gap-4">
-            <div className="flex-shrink-0 w-8 h-8 bg-red-400 text-white rounded-full flex items-center justify-center font-bold text-sm">
+            <div className="flex-shrink-0 w-8 h-8 bg-primary-400 text-white rounded-full flex items-center justify-center font-bold text-sm">
               4
             </div>
             <div>
@@ -1479,7 +1479,7 @@ function Step5Confirmation({ onComplete }: Step5Props) {
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <button
           onClick={onComplete}
-          className="px-8 py-3 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-colors font-medium"
+          className="px-8 py-3 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors font-medium"
         >
           Return to Dashboard
         </button>
@@ -1488,7 +1488,7 @@ function Step5Confirmation({ onComplete }: Step5Props) {
       <div className="mt-8 pt-8 border-t border-gray-200 text-sm text-gray-600">
         <p>
           Questions? Contact us at{' '}
-          <a href="mailto:support@hausee.ca" className="text-red-400 hover:text-red-500">
+          <a href="mailto:support@hausee.ca" className="text-primary-400 hover:text-primary-500">
             support@hausee.ca
           </a>
         </p>

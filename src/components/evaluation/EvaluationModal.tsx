@@ -184,7 +184,7 @@ export default function EvaluationModal({ home, evaluation, onClose, onUpdate }:
               onClick={() => handleSectionSelect(index)}
               className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
                 index === currentSectionIndex
-                  ? 'bg-red-400 text-white'
+                  ? 'bg-primary-400 text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
             >
@@ -196,8 +196,8 @@ export default function EvaluationModal({ home, evaluation, onClose, onUpdate }:
         <div className="flex-1 overflow-y-auto px-6 py-6">
           <div className="mb-6">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
-                <IconComponent className="w-6 h-6 text-red-400" />
+              <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center">
+                <IconComponent className="w-6 h-6 text-primary-400" />
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-gray-900">{currentSection.title}</h3>
@@ -209,7 +209,7 @@ export default function EvaluationModal({ home, evaluation, onClose, onUpdate }:
 
             <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-4">
               <div
-                className="h-full bg-red-400 transition-all duration-300"
+                className="h-full bg-primary-400 transition-all duration-300"
                 style={{ width: `${getSectionProgress(currentSection.id)}%` }}
               />
             </div>
@@ -239,7 +239,7 @@ export default function EvaluationModal({ home, evaluation, onClose, onUpdate }:
               placeholder={`Add any general notes about ${currentSection.title.toLowerCase()}...`}
               rows={4}
               maxLength={1000}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 resize-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 resize-none"
             />
             <div className="text-xs text-gray-500 text-right mt-1">
               {(sectionNotes[currentSection.id] || '').length}/1000
@@ -251,7 +251,7 @@ export default function EvaluationModal({ home, evaluation, onClose, onUpdate }:
           <div className="flex items-center gap-3 text-sm text-gray-600">
             {isSaving ? (
               <div className="flex items-center gap-2">
-                <Save className="w-4 h-4 animate-pulse text-red-400" />
+                <Save className="w-4 h-4 animate-pulse text-primary-400" />
                 <span>Saving...</span>
               </div>
             ) : lastSaved ? (
@@ -283,7 +283,7 @@ export default function EvaluationModal({ home, evaluation, onClose, onUpdate }:
             ) : (
               <button
                 onClick={handleNext}
-                className="px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-colors font-medium flex items-center gap-2"
+                className="px-4 py-2 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors font-medium flex items-center gap-2"
               >
                 Next
                 <ChevronRight className="w-4 h-4" />
@@ -310,7 +310,7 @@ export default function EvaluationModal({ home, evaluation, onClose, onUpdate }:
               </button>
               <button
                 onClick={handleClose}
-                className="flex-1 px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-colors"
+                className="flex-1 px-4 py-2 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors"
               >
                 Save & Exit
               </button>

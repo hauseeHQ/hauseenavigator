@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Home, TrendingUp, Shield, Users } from 'lucide-react';
+import { TrendingUp, Shield, Users } from 'lucide-react';
 
 export default function LandingPage() {
   return (
@@ -7,7 +7,11 @@ export default function LandingPage() {
       <div className="max-w-6xl mx-auto px-4 py-12 md:py-20">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-6">
-            <Home className="w-12 h-12 text-primary-400" />
+            <img
+              src="/hausee-logo.png"
+              alt="Hausee Navigator"
+              className="w-16 h-16 object-contain"
+            />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Hausee Navigator

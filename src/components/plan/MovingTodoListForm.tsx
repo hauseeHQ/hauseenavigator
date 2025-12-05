@@ -355,8 +355,8 @@ function MovingTaskItem({ task, checked, onToggle, completedAt }: MovingTaskItem
         onClick={() => onToggle(task.id)}
         className="flex-shrink-0 w-6 h-6 rounded border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 mt-0.5"
         style={{
-          borderColor: checked ? '#f87171' : '#d1d5db',
-          backgroundColor: checked ? '#f87171' : 'white',
+          borderColor: checked ? '#ef4d68' : '#d1d5db',
+          backgroundColor: checked ? '#ef4d68' : 'white',
         }}
         aria-label={`${checked ? 'Uncheck' : 'Check'} ${task.title}`}
       >

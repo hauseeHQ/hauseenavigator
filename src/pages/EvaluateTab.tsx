@@ -123,14 +123,14 @@ export default function EvaluateTab() {
                     className={
                       `relative py-4 px-1 text-sm font-medium transition-colors ${
                         activeTab === tab
-                          ? 'text-red-400 border-b-2 border-red-400'
+                          ? 'text-primary-400 border-b-2 border-primary-400'
                           : 'text-gray-500 hover:text-gray-700'
                       }`
                     }
                   >
                     {tab.charAt(0).toUpperCase() + tab.slice(1)}
                     {tab === 'compare' && compareCount > 0 && (
-                      <span className="ml-1 px-2 py-0.5 bg-red-400 text-white text-xs rounded-full">
+                      <span className="ml-1 px-2 py-0.5 bg-primary-400 text-white text-xs rounded-full">
                         {compareCount}
                       </span>
                     )}
@@ -244,14 +244,14 @@ function BrowseView({
 
       <button
         onClick={onAddHome}
-        className="fixed bottom-6 right-6 md:right-8 lg:right-12 w-14 h-14 bg-red-400 text-white rounded-full shadow-lg hover:bg-red-500 transition-all hover:scale-110 flex items-center justify-center z-10"
+        className="fixed bottom-6 right-6 md:right-8 lg:right-12 w-14 h-14 bg-primary-400 text-white rounded-full shadow-lg hover:bg-primary-500 transition-all hover:scale-110 flex items-center justify-center z-10"
         title="Add a home"
       >
         <Plus className="w-6 h-6" />
       </button>
 
       {compareCount >= 2 && (
-        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-red-400 text-white px-6 py-3 rounded-full shadow-lg z-10 flex items-center gap-2">
+        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-primary-400 text-white px-6 py-3 rounded-full shadow-lg z-10 flex items-center gap-2">
           <span className="font-medium">Compare {compareCount} Homes</span>
         </div>
       )}
@@ -320,7 +320,7 @@ function HomeCard({ home, onToggleFavorite, onToggleCompare, onCardClick }: Home
           className="absolute top-3 right-3 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-md"
         >
           <Heart
-            className={`w-5 h-5 ${home.favorite ? 'fill-red-400 text-red-400' : 'text-gray-600'}`}
+            className={`w-5 h-5 ${home.favorite ? 'fill-primary-400 text-primary-400' : 'text-gray-600'}`}
           />
         </button>
 
@@ -332,7 +332,7 @@ function HomeCard({ home, onToggleFavorite, onToggleCompare, onCardClick }: Home
             type="checkbox"
             checked={home.compareSelected}
             onChange={() => onToggleCompare(home.id)}
-            className="w-4 h-4 text-red-400 border-gray-300 rounded focus:ring-red-400"
+            className="w-4 h-4 text-primary-400 border-gray-300 rounded focus:ring-primary-400"
           />
           <span className="text-xs font-medium text-gray-700">Compare</span>
         </label>
@@ -342,7 +342,7 @@ function HomeCard({ home, onToggleFavorite, onToggleCompare, onCardClick }: Home
         <h3 className="text-lg font-bold text-gray-900 mb-1">{home.address}</h3>
         <p className="text-sm text-gray-600 mb-3">{home.neighborhood}</p>
 
-        <p className="text-xl font-bold text-red-400 mb-2">{formatCurrency(home.price)}</p>
+        <p className="text-xl font-bold text-primary-400 mb-2">{formatCurrency(home.price)}</p>
 
         <p className="text-sm text-gray-600 mb-3">
           {home.bedrooms} bd • {home.bathrooms} ba
@@ -435,7 +435,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Address <span className="text-red-400">*</span>
+                Address <span className="text-primary-400">*</span>
               </label>
               <input
                 type="text"
@@ -444,7 +444,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
                 className={`w-full h-12 px-4 border rounded-md focus:ring-2 transition-colors ${
                   errors.address
                     ? 'border-red-400 focus:border-red-400 focus:ring-red-100'
-                    : 'border-gray-300 focus:border-red-400 focus:ring-red-100'
+                    : 'border-gray-300 focus:border-primary-400 focus:ring-primary-100'
                 }`}
                 placeholder="123 Main Street"
               />
@@ -453,7 +453,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Neighborhood <span className="text-red-400">*</span>
+                Neighborhood <span className="text-primary-400">*</span>
               </label>
               <input
                 type="text"
@@ -462,7 +462,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
                 className={`w-full h-12 px-4 border rounded-md focus:ring-2 transition-colors ${
                   errors.neighborhood
                     ? 'border-red-400 focus:border-red-400 focus:ring-red-100'
-                    : 'border-gray-300 focus:border-red-400 focus:ring-red-100'
+                    : 'border-gray-300 focus:border-primary-400 focus:ring-primary-100'
                 }`}
                 placeholder="Downtown Toronto"
               />
@@ -473,7 +473,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Price <span className="text-red-400">*</span>
+                Price <span className="text-primary-400">*</span>
               </label>
               <input
                 type="number"
@@ -482,7 +482,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
                 className={`w-full h-12 px-4 border rounded-md focus:ring-2 transition-colors ${
                   errors.price
                     ? 'border-red-400 focus:border-red-400 focus:ring-red-100'
-                    : 'border-gray-300 focus:border-red-400 focus:ring-red-100'
+                    : 'border-gray-300 focus:border-primary-400 focus:ring-primary-100'
                 }`}
                 placeholder="500000"
               />
@@ -491,7 +491,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Bedrooms <span className="text-red-400">*</span>
+                Bedrooms <span className="text-primary-400">*</span>
               </label>
               <input
                 type="number"
@@ -500,7 +500,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
                 className={`w-full h-12 px-4 border rounded-md focus:ring-2 transition-colors ${
                   errors.bedrooms
                     ? 'border-red-400 focus:border-red-400 focus:ring-red-100'
-                    : 'border-gray-300 focus:border-red-400 focus:ring-red-100'
+                    : 'border-gray-300 focus:border-primary-400 focus:ring-primary-100'
                 }`}
                 placeholder="3"
               />
@@ -509,7 +509,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Bathrooms <span className="text-red-400">*</span>
+                Bathrooms <span className="text-primary-400">*</span>
               </label>
               <input
                 type="number"
@@ -519,7 +519,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
                 className={`w-full h-12 px-4 border rounded-md focus:ring-2 transition-colors ${
                   errors.bathrooms
                     ? 'border-red-400 focus:border-red-400 focus:ring-red-100'
-                    : 'border-gray-300 focus:border-red-400 focus:ring-red-100'
+                    : 'border-gray-300 focus:border-primary-400 focus:ring-primary-100'
                 }`}
                 placeholder="2"
               />
@@ -573,7 +573,7 @@ function AddHomeModal({ onClose, onSubmit }: AddHomeModalProps) {
             <button
               type="submit"
               disabled={!isValid}
-              className="flex-1 px-6 py-3 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-6 py-3 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Add Home
             </button>

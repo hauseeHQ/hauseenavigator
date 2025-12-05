@@ -35,7 +35,7 @@ export default function SelectTab() {
         ) : (
           <div className="space-y-6 mb-8">
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+              <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
                 <span className="text-2xl">🏡</span>
               </div>
               <div>
@@ -47,7 +47,7 @@ export default function SelectTab() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+              <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
                 <span className="text-2xl">⭐</span>
               </div>
               <div>
@@ -59,7 +59,7 @@ export default function SelectTab() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+              <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
                 <span className="text-2xl">💬</span>
               </div>
               <div>
@@ -75,7 +75,7 @@ export default function SelectTab() {
         <button
           onClick={() => setShowForm(true)}
           disabled={hasSubmitted}
-          className="w-full md:w-auto px-8 py-4 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-colors font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full md:w-auto px-8 py-4 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {hasSubmitted ? 'Request Already Submitted' : 'Start Agent Matching'}
         </button>
@@ -84,28 +84,28 @@ export default function SelectTab() {
           <h3 className="font-bold text-gray-900 mb-3">How It Works</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
             <div className="text-center">
-              <div className="w-10 h-10 bg-red-400 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">
+              <div className="w-10 h-10 bg-primary-400 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">
                 1
               </div>
               <div className="font-medium text-gray-900">Fill Out Form</div>
               <div className="text-gray-600 text-xs">5-minute questionnaire</div>
             </div>
             <div className="text-center">
-              <div className="w-10 h-10 bg-red-400 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">
+              <div className="w-10 h-10 bg-primary-400 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">
                 2
               </div>
               <div className="font-medium text-gray-900">We Match</div>
               <div className="text-gray-600 text-xs">24-48 hour turnaround</div>
             </div>
             <div className="text-center">
-              <div className="w-10 h-10 bg-red-400 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">
+              <div className="w-10 h-10 bg-primary-400 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">
                 3
               </div>
               <div className="font-medium text-gray-900">Meet Agents</div>
               <div className="text-gray-600 text-xs">Interview your matches</div>
             </div>
             <div className="text-center">
-              <div className="w-10 h-10 bg-red-400 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">
+              <div className="w-10 h-10 bg-primary-400 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">
                 4
               </div>
               <div className="font-medium text-gray-900">Choose</div>

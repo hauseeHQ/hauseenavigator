@@ -15,6 +15,14 @@ export default function ServerErrorPage({ errorId }: ServerErrorPageProps) {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center">
+        <div className="flex justify-center mb-6">
+          <img
+            src="/hausee-logo.png"
+            alt="Hausee Navigator"
+            className="w-16 h-16 object-contain"
+          />
+        </div>
+
         <div className="text-6xl mb-6">⚠️</div>
 
         <h1 className="text-3xl font-bold text-gray-900 mb-3">Something Went Wrong</h1>
@@ -35,7 +43,7 @@ export default function ServerErrorPage({ errorId }: ServerErrorPageProps) {
         <div className="space-y-3">
           <button
             onClick={handleRefresh}
-            className="w-full px-6 py-3 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-all hover:scale-105 font-medium flex items-center justify-center gap-2"
+            className="w-full px-6 py-3 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-all hover:scale-105 font-medium flex items-center justify-center gap-2"
           >
             <RefreshCw className="w-5 h-5" />
             Refresh Page
@@ -58,7 +66,7 @@ export default function ServerErrorPage({ errorId }: ServerErrorPageProps) {
 
         <p className="text-sm text-gray-500 mt-4">
           Still having trouble?{' '}
-          <a href="mailto:support@hausee.ca" className="text-red-400 hover:text-red-500">
+          <a href="mailto:support@hausee.ca" className="text-primary-400 hover:text-primary-500">
             Contact support
           </a>
           {errorId && ' with this error ID'}

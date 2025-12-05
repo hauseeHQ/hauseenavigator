@@ -7,6 +7,14 @@ export default function NotFoundPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center">
+        <div className="flex justify-center mb-6">
+          <img
+            src="/hausee-logo.png"
+            alt="Hausee Navigator"
+            className="w-16 h-16 object-contain"
+          />
+        </div>
+
         <div className="text-gray-300 text-9xl font-bold mb-4">404</div>
 
         <div className="text-6xl mb-6">🏚️</div>
@@ -20,7 +28,7 @@ export default function NotFoundPage() {
         <div className="space-y-3">
           <button
             onClick={() => navigate('/plan')}
-            className="w-full px-6 py-3 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-all hover:scale-105 font-medium flex items-center justify-center gap-2"
+            className="w-full px-6 py-3 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-all hover:scale-105 font-medium flex items-center justify-center gap-2"
           >
             <Home className="w-5 h-5" />
             Go to Dashboard
@@ -36,7 +44,7 @@ export default function NotFoundPage() {
 
           <button
             onClick={() => navigate(-1)}
-            className="w-full px-6 py-3 text-gray-700 hover:text-red-400 transition-colors font-medium flex items-center justify-center gap-2"
+            className="w-full px-6 py-3 text-gray-700 hover:text-primary-400 transition-colors font-medium flex items-center justify-center gap-2"
           >
             <ArrowLeft className="w-5 h-5" />
             Go Back
@@ -45,7 +53,7 @@ export default function NotFoundPage() {
 
         <p className="text-sm text-gray-500 mt-8">
           Need help?{' '}
-          <a href="mailto:support@hausee.ca" className="text-red-400 hover:text-red-500">
+          <a href="mailto:support@hausee.ca" className="text-primary-400 hover:text-primary-500">
             Contact support
           </a>
         </p>

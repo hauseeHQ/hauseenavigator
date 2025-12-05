@@ -143,13 +143,13 @@ export default function GuideTab() {
         <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-bold text-gray-900">Your Progress</h2>
-            <span className="text-2xl font-bold text-red-400">
+            <span className="text-2xl font-bold text-primary-400">
               {overallProgress.percentage}%
             </span>
           </div>
           <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-red-400 to-red-500 transition-all duration-500"
+              className="h-full bg-gradient-to-r from-primary-400 to-primary-500 transition-all duration-500"
               style={{ width: `${overallProgress.percentage}%` }}
             />
           </div>
@@ -218,8 +218,8 @@ function ModuleCard({
         className="w-full px-6 py-5 flex items-center justify-between hover:bg-gray-50 transition-colors"
       >
         <div className="flex items-center gap-4 flex-1 text-left">
-          <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
-            <BookOpen className="w-6 h-6 text-red-400" />
+          <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center flex-shrink-0">
+            <BookOpen className="w-6 h-6 text-primary-400" />
           </div>
 
           <div className="flex-1">
@@ -238,7 +238,7 @@ function ModuleCard({
                 isComplete
                   ? 'bg-green-100 text-green-700'
                   : hasProgress
-                  ? 'bg-red-100 text-red-700'
+                  ? 'bg-primary-100 text-primary-700'
                   : 'bg-gray-100 text-gray-600'
               }`}
             >
@@ -398,7 +398,7 @@ function LessonCard({
               value={notes}
               onChange={(e) => onNotesChange(e.target.value)}
               placeholder="Add your personal notes here... These are private and only visible to you."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 resize-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 resize-none"
               rows={4}
             />
             <p className="text-xs text-gray-500 mt-1">

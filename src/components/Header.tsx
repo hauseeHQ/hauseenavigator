@@ -34,9 +34,22 @@ export default function Header({ onOpenSettings }: HeaderProps) {
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-      <div>
-        <h1 className="text-xl font-semibold text-gray-900">Hausee Navigator</h1>
-        <p className="text-sm text-gray-500">Welcome back, Guest</p>
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => {}}
+          className="hover:opacity-80 transition-opacity"
+          aria-label="Go to dashboard"
+        >
+          <img
+            src="/hausee-logo.png"
+            alt="Hausee Navigator"
+            className="w-10 h-10 object-contain"
+          />
+        </button>
+        <div>
+          <h1 className="text-xl font-semibold text-gray-900">Hausee Navigator</h1>
+          <p className="text-sm text-gray-500">Welcome back, Guest</p>
+        </div>
       </div>
       <div className="flex items-center gap-4">
         <div className="relative" ref={dropdownRef}>

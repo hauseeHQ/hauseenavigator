@@ -39,6 +39,14 @@ export default function AccessDeniedPage({ reason = 'permission' }: AccessDenied
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center">
+        <div className="flex justify-center mb-6">
+          <img
+            src="/hausee-logo.png"
+            alt="Hausee Navigator"
+            className="w-16 h-16 object-contain"
+          />
+        </div>
+
         <div className="text-6xl mb-6">🔒</div>
 
         <h1 className="text-3xl font-bold text-gray-900 mb-3">{content.title}</h1>
@@ -48,7 +56,7 @@ export default function AccessDeniedPage({ reason = 'permission' }: AccessDenied
         <div className="space-y-3">
           <button
             onClick={content.onAction}
-            className="w-full px-6 py-3 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-all hover:scale-105 font-medium flex items-center justify-center gap-2"
+            className="w-full px-6 py-3 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-all hover:scale-105 font-medium flex items-center justify-center gap-2"
           >
             {reason === 'session' ? (
               <LogIn className="w-5 h-5" />
@@ -60,7 +68,7 @@ export default function AccessDeniedPage({ reason = 'permission' }: AccessDenied
 
           <button
             onClick={() => navigate('/plan')}
-            className="w-full px-6 py-3 text-gray-700 hover:text-red-400 transition-colors font-medium"
+            className="w-full px-6 py-3 text-gray-700 hover:text-primary-400 transition-colors font-medium"
           >
             Go to Dashboard
           </button>

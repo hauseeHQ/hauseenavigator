@@ -36,7 +36,7 @@ export default function EvaluationItemComponent({
         <select
           value={(value as string) || ''}
           onChange={(e) => onRatingChange(categoryId, item.id, e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400"
         >
           <option value="">Select an option</option>
           {item.options.map((option) => (
@@ -55,7 +55,7 @@ export default function EvaluationItemComponent({
             value={(value as number) || ''}
             onChange={(e) => onRatingChange(categoryId, item.id, Number(e.target.value))}
             placeholder="0"
-            className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400"
+            className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400"
           />
         </div>
       )}
@@ -66,7 +66,7 @@ export default function EvaluationItemComponent({
           onChange={(e) => onRatingChange(categoryId, item.id, e.target.value)}
           placeholder="Enter your observations..."
           rows={4}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 resize-none"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 resize-none"
         />
       )}
 
@@ -81,7 +81,7 @@ export default function EvaluationItemComponent({
             placeholder="Add any specific observations..."
             rows={2}
             maxLength={500}
-            className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-100 focus:border-red-400 resize-none"
+            className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-100 focus:border-primary-400 resize-none"
           />
           <div className="text-xs text-gray-500 text-right mt-1">{note.length}/500</div>
         </div>

@@ -25,19 +25,39 @@ export default function Sidebar({ isCollapsed, activeTab, onTabChange, onToggleS
         isCollapsed ? 'w-16' : 'w-60'
       }`}
     >
-      <div className={`flex items-center ${isCollapsed ? 'justify-center pt-4' : 'justify-end pt-4 pr-4'}`}>
+      <div className={`flex items-center ${isCollapsed ? 'justify-center pt-6 pb-4' : 'justify-between pt-6 pb-4 px-4'}`}>
         <button
-          onClick={onToggleSidebar}
-          className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-100 transition-colors"
-          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          onClick={() => onTabChange('plan')}
+          className="hover:opacity-80 transition-opacity"
+          aria-label="Go to dashboard"
         >
-          {isCollapsed ? (
-            <ChevronRight className="w-5 h-5 text-gray-600" />
-          ) : (
-            <ChevronLeft className="w-5 h-5 text-gray-600" />
-          )}
+          <img
+            src="/hausee-logo.png"
+            alt="Hausee Navigator"
+            className={`${isCollapsed ? 'w-8 h-8' : 'w-12 h-12'} object-contain`}
+          />
         </button>
+        {!isCollapsed && (
+          <button
+            onClick={onToggleSidebar}
+            className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-100 transition-colors"
+            aria-label="Collapse sidebar"
+          >
+            <ChevronLeft className="w-5 h-5 text-gray-600" />
+          </button>
+        )}
       </div>
+      {isCollapsed && (
+        <div className="flex justify-center pb-2">
+          <button
+            onClick={onToggleSidebar}
+            className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-100 transition-colors"
+            aria-label="Expand sidebar"
+          >
+            <ChevronRight className="w-5 h-5 text-gray-600" />
+          </button>
+        </div>
+      )}
 
       <div className={`space-y-1 flex-1 ${isCollapsed ? 'px-2 pt-4' : 'p-4'}`}>
         {navItems.map((item) => {
