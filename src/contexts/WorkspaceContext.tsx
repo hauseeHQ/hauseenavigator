@@ -19,7 +19,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const { user, isLoaded: userLoaded } = useUser();
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [currentWorkspace, setCurrentWorkspace] = useState<Workspace | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const loadWorkspaces = async () => {
@@ -57,7 +57,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    if (userLoaded) {
+    if (userLoaded && user) {
       loadWorkspaces();
     }
   }, [userLoaded, user?.id]);

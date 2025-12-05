@@ -20,92 +20,22 @@ function App() {
         <WorkspaceProvider>
           <ToastProvider>
             <Routes>
-              <Route path="/" element={<Navigate to="/signin" replace />} />
+              <Route path="/" element={<Navigate to="/plan" replace />} />
 
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/verify-email" element={<VerifyEmailPage />} />
 
-              <Route
-                path="/workspace/setup"
-                element={
-                  <ProtectedRoute>
-                    <WorkspaceSetupPage />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/workspace/setup" element={<WorkspaceSetupPage />} />
+              <Route path="/workspace/accept" element={<AcceptInvitationPage />} />
+              <Route path="/workspace/settings" element={<WorkspaceSettingsPage />} />
 
-              <Route
-                path="/workspace/accept"
-                element={
-                  <ProtectedRoute>
-                    <AcceptInvitationPage />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/workspace/settings"
-                element={
-                  <ProtectedRoute>
-                    <WorkspaceSettingsPage />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/plan"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/evaluate"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/evaluate/:homeId"
-                element={
-                  <ProtectedRoute>
-                    <HomeDetailPage />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/select"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/guide"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/ai"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/plan" element={<Dashboard />} />
+              <Route path="/evaluate" element={<Dashboard />} />
+              <Route path="/evaluate/:homeId" element={<HomeDetailPage />} />
+              <Route path="/select" element={<Dashboard />} />
+              <Route path="/guide" element={<Dashboard />} />
+              <Route path="/ai" element={<Dashboard />} />
 
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
