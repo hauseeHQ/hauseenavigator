@@ -37,7 +37,7 @@ export default function EmptyState({
         {actionLabel && onAction && (
           <button
             onClick={onAction}
-            className="px-6 py-3 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-all hover:scale-105 font-medium"
+            className="px-6 py-3 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-all hover:scale-105 font-medium"
           >
             {actionLabel}
           </button>
@@ -46,7 +46,7 @@ export default function EmptyState({
         {secondaryActionLabel && onSecondaryAction && (
           <button
             onClick={onSecondaryAction}
-            className="px-6 py-3 text-gray-700 hover:text-red-400 transition-colors font-medium"
+            className="px-6 py-3 text-gray-700 hover:text-primary-400 transition-colors font-medium"
           >
             {secondaryActionLabel}
           </button>
