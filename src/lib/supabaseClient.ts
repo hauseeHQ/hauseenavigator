@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { DreamHome, SelfAssessment, CategoryScore, AssessmentStatus, MortgageChecklist, ChecklistProgress, ChecklistItemState, MovingTodoList, MovingTodoItemState, BudgetPlannerData, DownPaymentTrackerData, Home, AddHomeFormData } from '../types';
+import { DreamHome, SelfAssessment, CategoryScore, AssessmentStatus, MortgageChecklist, ChecklistProgress, ChecklistItemState, MovingTodoList, MovingTodoItemState, BudgetPlannerData, DownPaymentTrackerData, Home, AddHomeFormData, HomeEvaluation } from '../types';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -701,6 +701,155 @@ export async function deleteHome(homeId: string): Promise<{ success: boolean; er
     return { success: true };
   } catch (err) {
     console.error('Error deleting home:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function loadEvaluation(
+  homeId: string,
+  userId: string
+): Promise<{ data: HomeEvaluation | null; error?: string }> {
+  try {
+    const { data, error } = await supabase
+      .from('home_evaluations')
+      .select('*')
+      .eq('home_id', homeId)
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error loading evaluation:', error);
+      return { data: null, error: error.message };
+    }
+
+    if (!data) {
+      return { data: null };
+    }
+
+    const evaluation: HomeEvaluation = {
+      id: data.id,
+      homeId: data.home_id,
+      userId: data.user_id,
+      ratings: data.ratings || {},
+      itemNotes: data.item_notes || {},
+      sectionNotes: data.section_notes || {},
+      overallRating: Number(data.overall_rating),
+      completionPercentage: data.completion_percentage,
+      evaluationStatus: data.evaluation_status,
+      startedAt: data.started_at,
+      completedAt: data.completed_at,
+      createdAt: data.created_at,
+      updatedAt: data.updated_at,
+    };
+
+    return { data: evaluation };
+  } catch (err) {
+    console.error('Error loading evaluation:', err);
+    return {
+      data: null,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function saveEvaluation(
+  evaluation: Partial<HomeEvaluation> & { homeId: string; userId: string }
+): Promise<{ success: boolean; error?: string; data?: HomeEvaluation }> {
+  try {
+    const record = {
+      home_id: evaluation.homeId,
+      user_id: evaluation.userId,
+      ratings: evaluation.ratings || {},
+      item_notes: evaluation.itemNotes || {},
+      section_notes: evaluation.sectionNotes || {},
+      overall_rating: evaluation.overallRating || 0,
+      completion_percentage: evaluation.completionPercentage || 0,
+      evaluation_status: evaluation.evaluationStatus || 'not_started',
+      started_at: evaluation.startedAt || (evaluation.evaluationStatus === 'in_progress' ? new Date().toISOString() : null),
+      completed_at: evaluation.completedAt,
+      updated_at: new Date().toISOString(),
+    };
+
+    const { data, error } = await supabase
+      .from('home_evaluations')
+      .upsert(record, {
+        onConflict: 'home_id,user_id',
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error saving evaluation:', error);
+      return { success: false, error: error.message };
+    }
+
+    const savedEvaluation: HomeEvaluation = {
+      id: data.id,
+      homeId: data.home_id,
+      userId: data.user_id,
+      ratings: data.ratings,
+      itemNotes: data.item_notes,
+      sectionNotes: data.section_notes,
+      overallRating: Number(data.overall_rating),
+      completionPercentage: data.completion_percentage,
+      evaluationStatus: data.evaluation_status,
+      startedAt: data.started_at,
+      completedAt: data.completed_at,
+      createdAt: data.created_at,
+      updatedAt: data.updated_at,
+    };
+
+    return { success: true, data: savedEvaluation };
+  } catch (err) {
+    console.error('Error saving evaluation:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
+    };
+  }
+}
+
+export async function updateEvaluationRating(
+  evaluationId: string,
+  categoryId: string,
+  itemId: string,
+  value: string | number
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { data: existing, error: fetchError } = await supabase
+      .from('home_evaluations')
+      .select('ratings')
+      .eq('id', evaluationId)
+      .single();
+
+    if (fetchError) {
+      return { success: false, error: fetchError.message };
+    }
+
+    const ratings = existing.ratings || {};
+    if (!ratings[categoryId]) {
+      ratings[categoryId] = {};
+    }
+    ratings[categoryId][itemId] = value;
+
+    const { error: updateError } = await supabase
+      .from('home_evaluations')
+      .update({
+        ratings,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', evaluationId);
+
+    if (updateError) {
+      return { success: false, error: updateError.message };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Error updating rating:', err);
     return {
       success: false,
       error: err instanceof Error ? err.message : 'Unknown error',

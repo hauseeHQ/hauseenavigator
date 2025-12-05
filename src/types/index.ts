@@ -530,3 +530,74 @@ export interface CoBuyer {
   joinedAt: string;
   lastActiveAt?: string;
 }
+
+export type RatingValue = 'good' | 'fair' | 'poor';
+
+export interface EvaluationItem {
+  id: string;
+  label: string;
+  type: 'rating' | 'currency' | 'textarea' | 'dropdown';
+  options?: string[];
+  helperText?: string;
+}
+
+export interface EvaluationCategory {
+  id: string;
+  title: string;
+  icon: string;
+  items: EvaluationItem[];
+}
+
+export interface HomeEvaluation {
+  id: string;
+  homeId: string;
+  userId: string;
+
+  ratings: {
+    [categoryId: string]: {
+      [itemId: string]: RatingValue | number | string;
+    };
+  };
+
+  itemNotes: {
+    [itemId: string]: string;
+  };
+
+  sectionNotes: {
+    [sectionId: string]: string;
+  };
+
+  overallRating: number;
+  completionPercentage: number;
+  evaluationStatus: 'not_started' | 'in_progress' | 'completed';
+
+  startedAt?: string;
+  completedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface EvaluationPhoto {
+  id: string;
+  evaluationId: string;
+  sectionId: string;
+  storagePath: string;
+  thumbnailPath: string;
+  caption?: string;
+  fileSize: number;
+  mimeType: string;
+  width?: number;
+  height?: number;
+  createdAt: string;
+}
+
+export interface EvaluationVoiceNote {
+  id: string;
+  evaluationId: string;
+  sectionId: string;
+  storagePath: string;
+  duration: number;
+  fileSize: number;
+  transcript?: string;
+  createdAt: string;
+}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Plus, Home as HomeIcon, Heart, X, Mountain, Printer } from 'lucide-react';
 import { EvaluateTabType, Home, AddHomeFormData } from '../types';
 import { loadHomes, addHome, updateHome } from '../lib/supabaseClient';
@@ -204,6 +205,7 @@ function BrowseView({
   onToggleCompare,
   compareCount,
 }: BrowseViewProps) {
+  const navigate = useNavigate();
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-20">
@@ -235,6 +237,7 @@ function BrowseView({
             home={home}
             onToggleFavorite={onToggleFavorite}
             onToggleCompare={onToggleCompare}
+            onCardClick={() => navigate(`/evaluate/${home.id}`)}
           />
         ))}
       </div>
@@ -260,9 +263,10 @@ interface HomeCardProps {
   home: Home;
   onToggleFavorite: (homeId: string) => void;
   onToggleCompare: (homeId: string) => void;
+  onCardClick: () => void;
 }
 
-function HomeCard({ home, onToggleFavorite, onToggleCompare }: HomeCardProps) {
+function HomeCard({ home, onToggleFavorite, onToggleCompare, onCardClick }: HomeCardProps) {
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat('en-CA', {
       style: 'currency',
@@ -295,7 +299,10 @@ function HomeCard({ home, onToggleFavorite, onToggleCompare }: HomeCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group">
+    <div
+      onClick={onCardClick}
+      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group"
+    >
       <div className="relative h-48 bg-gray-200">
         {home.primaryPhoto ? (
           <img src={home.primaryPhoto} alt={home.address} className="w-full h-full object-cover" />
